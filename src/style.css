@@ -1,0 +1,597 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #2d384b;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+/* aumentando o tamanho do texto */
+h1,
+h2,
+h3 {
+  font-size: 1.5em;
+  position: relative;
+  top: 20px;
+  color: white;
+}
+
+h2.total
+{
+  font-size: 1.8em;
+  position: relative;
+  top: 25px;
+  color: white;
+}
+
+h2.quant
+{
+  font-size: 1.5em;
+  position: relative;
+  top: 20px;
+  color: white;
+}
+
+button {
+  font-size: 1.5em;
+  position: relative;
+  left: 50px;
+}
+
+/* Define um estilo para o cabeçalho da página */
+h1 {
+  padding: 20px;
+  margin: 0;
+  text-align: center;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2em;
+  color: #2d384b;
+}
+
+h2.moedeiro {
+  color: white;
+  position: relative;
+  top: 145px;
+  z-index: 2;
+  text-align: center;
+  font-size: 2em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  color: white;
+}
+
+li {
+  margin: 1.5em 0;
+}
+
+button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+}
+
+button::before,
+button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+button::before {
+  top: -1em;
+  left: -1em;
+}
+
+button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+button:hover::before,
+button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+button:hover {
+  color: rgb(10, 25, 30);
+}
+
+button:active {
+  filter: brightness(0.8);
+}
+
+.vending-machine {
+  background-color: #00000093;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding:35px;
+  width: 800px;
+  margin: 0 auto;
+  position: relative;
+  top: 70px;
+}
+
+.product-list {
+  list-style: none;
+  padding: 0;
+}
+
+.product-list li {
+  margin-bottom: 10px;
+}
+
+.product-image-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.product-image-container img {
+  width: 20%; /* reduzindo a altura da imagem */
+}
+
+.coin-button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  left: 90px;
+  bottom: 10px;
+}
+
+.coin-button::before,
+.coin-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.coin-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.coin-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.coin-button:hover::before,
+.coin-button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.coin-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.coin-button:active {
+  filter: brightness(0.8);
+}
+
+.coin10-button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  left: 30px;
+  bottom: 5px;
+}
+
+.coin10-button::before,
+.coin10-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.coin10-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.coin10-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.coin10-button:hover::before,
+.coin10-button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.coin10-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.coin10-button:active {
+  filter: brightness(0.8);
+}
+
+.coin50-button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  left: 30px;
+  top: 15px;
+}
+
+.coin50-button::before,
+.coin50-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.coin50-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.coin50-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.coin50-button:hover::before,
+.coin50-button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.coin50-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.coin50-button:active {
+  filter: brightness(0.8);
+}
+
+.purchase-button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  top: 10px;
+  left: 100px;
+}
+
+.purchase-button::before,
+.purchase-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.purchase-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.purchase-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.purchase-button:hover::before,
+.purchase-button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.purchase-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.purchase-button:active {
+  filter: brightness(0.8);
+}
+
+.close-button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  left: 130px;
+    top: 9px;
+}
+
+.close-button::before,
+.close-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.close-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.close-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.close-button:hover::before,
+.close-button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.close-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.close-button:active {
+  filter: brightness(0.8);
+}
+
+img {
+  width: 30%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  animation: updown 2s ease-in-out infinite;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 2em;
+  text-align: center;
+  margin: 20px 0;
+}
+
+footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+  position:absolute;
+  top: 620%;
+  width: 100%;
+  right: 5px;
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+  color: #2d384b;
+  left: 0;
+}
+
+a {
+  color: #2d384b; /* Cor do texto do link */
+  text-decoration: none; /* Remove a sublinhado padrão */
+  border-bottom: 2px solid #2d384b; /* Adiciona uma linha de fundo sob o link */
+  padding-bottom: 3px; /* Adiciona espaço entre o texto do link e a linha de fundo */
+  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Adiciona uma transição suave ao mudar a cor do texto e da linha de fundo */
+}
+
+a:hover {
+  color: #0088cc; /* Cor do texto do link ao passar o mouse */
+  border-color: #0088cc; /* Cor da linha de fundo ao passar o mouse */
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  width: 10%;
+}
+
+.navbar-logo img.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.navbar-links a {
+  transition: color 0.2s ease-in-out, border-bottom 0.2s ease-in-out; /* Adiciona uma transição suave ao mudar a cor do texto e a aparência do sublinhado */
+  text-decoration: none;
+  color: #2d384b;
+  font-weight: bold;
+  font-size: 20px;
+  border-bottom: 2px solid transparent; /* Adiciona um sublinhado transparente */
+  position: relative;
+  right: 50px;
+}
+
+.navbar-links a:hover {
+  color: #0088cc; /* Cor do texto do link ao passar o mouse */
+  border-bottom: 2px solid #0088cc; /* Adiciona um sublinhado na cor desejada */
+}
+
+.loader-container {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #0088cc;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
