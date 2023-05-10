@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function VendingMachine() {
   const [coins, setCoins] = useState(31); // valor total em cêntimos
@@ -85,6 +87,21 @@ function VendingMachine() {
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
 
+   // função para exibir notificação de moedas inseridas
+   function notifyCoinInserted(value) {
+    toast.info(`Moeda de ${value.toFixed(2)} cêntimo inserida!`);
+  }
+
+  // função para exibir notificação de produto selecionado
+  function notifyProductSelected(product) {
+    toast.success(`Produto ${product.name} selecionado!`);
+  }
+
+  // função para exibir notificação de compra bem sucedida
+  function notifyPurchaseSuccessful(change) {
+    toast.success(`Compra realizada com sucesso! Troco: ${change.toFixed(2)} cêntimos`);
+  }
+
   function handleScrollToBottom() {
     const bottomElement = document.querySelector("footer"); // substitua "myFooter" pelo ID do elemento onde deseja rolar a página
     bottomElement.scrollIntoView({ behavior: "smooth" }); // use "smooth" para rolar suavemente até o elemento
@@ -110,23 +127,30 @@ function VendingMachine() {
   function handleInsertCoin() {
     setInsertedCoins((prevCoins) => prevCoins + 0.2);
     handleInsertCoins(0.2);
+    console.log(`Moeda de 0.20 cêntimos inserida`);
+    notifyCoinInserted(0.2);
   }
 
   // função para inserir moedas de 10 cêntimos
   function handleInsertCoin10() {
     setInsertedCoins((prevCoins) => prevCoins + 0.1);
     handleInsertCoins(0.1);
+    console.log(`Moeda de 0.10 cêntimos inserida`);
+    notifyCoinInserted(0.1);
   }
 
   // função para inserir moedas de 50 cêntimos
   function handleInsertCoin50() {
     setInsertedCoins((prevCoins) => prevCoins + 0.5);
     handleInsertCoins(0.5);
+    console.log(`Moeda de 0.50 cêntimos inserida`);
+    notifyCoinInserted(0.5);
   }
 
   // função para selecionar o produto desejado
   function handleSelectProduct(product) {
     setSelectedProduct(product);
+    notifyProductSelected(product);
   }
 
   // função para concluir a compra
@@ -160,12 +184,15 @@ function VendingMachine() {
         (prevCoinsQuantity20) => prevCoinsQuantity20 - num20Coins
       );
 
-      setCoins((prevCoins) => prevCoins + selectedProduct.price);
+      setCoins((prevCoins) => prevCoins + selectedProduct.price - change);
+
       if (change > 0) {
+        console.log(`Troco a receber: € ${change.toFixed(2)}`);
         alert(`Por favor, recolha o seu troco de € ${change.toFixed(2)}`);
       }
       setChangeCoins(0);
       setInsertedCoins(0);
+      notifyPurchaseSuccessful(change);
       setProducts((prevProducts) => {
         return prevProducts.map((product) => {
           if (product.name === selectedProduct.name) {
@@ -174,10 +201,14 @@ function VendingMachine() {
           return product;
         });
       });
+      console.log(
+        `A sua bebida: ${selectedProduct.name} foi comprada com sucesso.`
+      );
       alert(`Por favor recolha a sua ${selectedProduct.name}.`);
       setSelectedProduct(null);
       window.scrollTo(0, 0);
     } else {
+      console.log(`A sua bebida: ${selectedProduct.name} está indisponível.`);
       alert(`${selectedProduct.name} indisponível.`);
     }
   }
@@ -200,6 +231,7 @@ function VendingMachine() {
             <button
               onClick={() => {
                 handleSelectProduct(product);
+                console.log(`Produto selecionado: ${product.name}`);
                 handleScrollToBottom();
               }}
             >
@@ -271,6 +303,7 @@ function VendingMachine() {
           >
             Fechar
           </button>
+          <ToastContainer />
         </div>
       )}
     </div>
