@@ -87,8 +87,8 @@ function VendingMachine() {
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
 
-   // função para exibir notificação de moedas inseridas
-   function notifyCoinInserted(value) {
+  // função para exibir notificação de moedas inseridas
+  function notifyCoinInserted(value) {
     toast.info(`Moeda de ${value.toFixed(2)} cêntimo inserida!`);
   }
 
@@ -99,7 +99,9 @@ function VendingMachine() {
 
   // função para exibir notificação de compra bem sucedida
   function notifyPurchaseSuccessful(change) {
-    toast.success(`Compra realizada com sucesso! Troco: ${change.toFixed(2)} cêntimos`);
+    toast.success(
+      `Compra realizada com sucesso! Troco: ${change.toFixed(2)} cêntimos`
+    );
   }
 
   function handleScrollToBottom() {
