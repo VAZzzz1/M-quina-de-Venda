@@ -156,10 +156,10 @@ function VendingMachine() {
       setCoinsQuantity10(
         (prevCoinsQuantity10) => prevCoinsQuantity10 - num10Coins
       );
-      setCoinsQuantity20( // adiciona o estado para as moedas de 20 centavos
+      setCoinsQuantity20(
         (prevCoinsQuantity20) => prevCoinsQuantity20 - num20Coins
       );
-  
+
       setCoins((prevCoins) => prevCoins + selectedProduct.price);
       if (change > 0) {
         alert(`Por favor, recolha o seu troco de € ${change.toFixed(2)}`);
@@ -181,7 +181,6 @@ function VendingMachine() {
       alert(`${selectedProduct.name} indisponível.`);
     }
   }
-  
 
   return (
     <div className="vending-machine">
