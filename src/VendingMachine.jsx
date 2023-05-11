@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Products from "./Products";
 import Coin from "./Coin";
 import "./style.css";
@@ -27,13 +27,33 @@ function VendingMachine() {
   
   const [products, setProducts] = useState(productData);
 
+  useEffect(() => {
+    localStorage.setItem("coins", coins);
+  }, [coins]);
+  
+  useEffect(() => {
+    localStorage.setItem("coinsQuantity20", coinsQuantity20);
+  }, [coinsQuantity20]);
+  
+  useEffect(() => {
+    localStorage.setItem("coinsQuantity10", coinsQuantity10);
+  }, [coinsQuantity10]);
+  
+  useEffect(() => {
+    localStorage.setItem("coinsQuantity50", coinsQuantity50);
+  }, [coinsQuantity50]);
+  
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]); 
+
   const [selectedProduct, setSelectedProduct] = useState(null); // produto selecionado pelo utilizador
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
 
   // função para exibir notificação de compra bem sucedida
   function notifyPurchaseSuccessful() {
-    toast.success(`Compra realizada com sucesso!`, { autoClose: 1500 });
+    toast.success(`${selectedProduct.name} comprada com sucesso!`, { autoClose: 2500 });
   }
 
   // função para concluir a compra
@@ -70,11 +90,10 @@ function VendingMachine() {
       setCoins((prevCoins) => prevCoins + selectedProduct.price - change);
 
       if (change > 0) {
-        console.log(`Troco a receber: € ${change.toFixed(2)}`);
-        toast.success(`O seu Troco é de € ${change.toFixed(2)}`, {
-          autoClose: 1500,
+        console.log(`Troco a receber: € ${change.toFixed(2).toString()}`);
+        toast.success(`Recebeu troco de € ${change.toFixed(2)}`, {
+          autoClose: 2000,
         });
-        alert(`Por favor, recolha o seu troco de € ${change.toFixed(2)}`);
       }
       setChangeCoins(0);
       setInsertedCoins(0);
@@ -90,7 +109,7 @@ function VendingMachine() {
       console.log(
         `A sua bebida: ${selectedProduct.name} foi comprada com sucesso.`
       );
-      alert(`Por favor recolha a sua ${selectedProduct.name}.`);
+      localStorage.setItem("changeCoins", change.toFixed(2));
       window.scrollTo(0, 0);
     } else {
       console.log(`A sua bebida: ${selectedProduct.name} está indisponível.`);

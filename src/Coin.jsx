@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Coin(props) {
+
   // função para exibir notificação de moedas inseridas
   function notifyCoinInserted(value) {
     toast.info(`Moeda de ${value.toFixed(2)} cêntimos inserida!`, {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import "./style.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,8 +12,17 @@ function Products(props) {
 
   function handleSelectProduct(product) {
     props.setSelectedProduct(product);
+    localStorage.setItem("selectedProduct", JSON.stringify(product.name));
     notifyProductSelected(product);
-  }
+  }  
+
+  useEffect(() => {
+    const storedProductName = JSON.parse(localStorage.getItem("selectedProduct"));
+    if (storedProductName) {
+      const selectedProduct = props.products.find(product => product.name === storedProductName);
+      props.setSelectedProduct(selectedProduct);
+    }
+  }, []);  
 
   function notifyProductSelected(product) {
     toast.success(`Produto ${product.name} selecionado!`, { autoClose: 1500 });
