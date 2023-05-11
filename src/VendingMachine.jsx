@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Products from "./Products";
+import Coin from "./Coin";
 import "./style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,151 +10,30 @@ function VendingMachine() {
   const [coinsQuantity20, setCoinsQuantity20] = useState(50); // quantidade de moedas de 20 cêntimos no moedeiro
   const [coinsQuantity10, setCoinsQuantity10] = useState(60); // quantidade de moedas de 10 cêntimos no moedeiro
   const [coinsQuantity50, setCoinsQuantity50] = useState(30); // quantidade de moedas de 50 cêntimos no moedeiro
-  const [products, setProducts] = useState([
-    {
-      name: "Coca-Cola",
-      price: 1.2,
-      quantity: 10,
-      img: "../img/coca-cola.png",
-    },
-    {
-      name: "Soda-Sprite",
-      price: 0.8,
-      quantity: 5,
-      img: "../img/sprite.png",
-    },
-    {
-      name: "USMug Beer",
-      price: 7.0,
-      quantity: 8,
-      img: "../img/mugbeer.png",
-    },
-    {
-      name: "Canada Dryy",
-      price: 1.6,
-      quantity: 6,
-      img: "../img/canadadry.png",
-    },
-    {
-      name: "Soda-Crush",
-      price: 6.0,
-      quantity: 7,
-      img: "../img/crush.png",
-    },
-    {
-      name: "Dr. Pepper",
-      price: 1.75,
-      quantity: 10,
-      img: "../img/drpepper.png",
-    },
-    {
-      name: "Soda-Fanta",
-      price: 0.75,
-      quantity: 9,
-      img: "../img/fanta.png",
-    },
-    {
-      name: "Br. Guarana",
-      price: 1.5,
-      quantity: 9,
-      img: "../img/guarana.png",
-    },
-    {
-      name: "Mount Dew",
-      price: 2.65,
-      quantity: 5,
-      img: "../img/mountaindew.png",
-    },
-    {
-      name: "SodaPepsi",
-      price: 0.8,
-      quantity: 10,
-      img: "../img/pepsi.png",
-    },
-    {
-      name: "Seven Up",
-      price: 0.8,
-      quantity: 10,
-      img: "../img/sevenup.png",
-    },
-    {
-      name: "SodaSumol",
-      price: 0.63,
-      quantity: 9,
-      img: "../img/sumol.png",
-    },
-  ]); // produtos disponíveis na máquina
+  const productData = [
+    { name: "Coca-Cola", price: 1.2, quantity: 10, img: "../img/coca-cola.png" },
+    { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
+    { name: "USMug Beer", price: 7.0, quantity: 8, img: "../img/mugbeer.png" },
+    { name: "Canada Dryy", price: 1.6, quantity: 6, img: "../img/canadadry.png" },
+    { name: "Soda-Crush", price: 6.0, quantity: 7, img: "../img/crush.png" },
+    { name: "Dr. Pepper", price: 1.75, quantity: 10, img: "../img/drpepper.png" },
+    { name: "Soda-Fanta", price: 0.75, quantity: 9, img: "../img/fanta.png" },
+    { name: "Br. Guarana", price: 1.5, quantity: 9, img: "../img/guarana.png" },
+    { name: "Mount Dew", price: 2.65, quantity: 5, img: "../img/mountaindew.png" },
+    { name: "SodaPepsi", price: 0.8, quantity: 10, img: "../img/pepsi.png" },
+    { name: "Seven Up", price: 0.8, quantity: 10, img: "../img/sevenup.png" },
+    { name: "SodaSumol", price: 0.63, quantity: 9, img: "../img/sumol.png" },
+  ];
+  
+  const [products, setProducts] = useState(productData);
 
   const [selectedProduct, setSelectedProduct] = useState(null); // produto selecionado pelo utilizador
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
 
-  // função para exibir notificação de moedas inseridas
-  function notifyCoinInserted(value) {
-    toast.info(`Moeda de ${value.toFixed(2)} cêntimo inserida!`);
-  }
-
-  // função para exibir notificação de produto selecionado
-  function notifyProductSelected(product) {
-    toast.success(`Produto ${product.name} selecionado!`);
-  }
-
   // função para exibir notificação de compra bem sucedida
-  function notifyPurchaseSuccessful(change) {
-    toast.success(
-      `Compra realizada com sucesso! Troco: ${change.toFixed(2)} cêntimos`
-    );
-  }
-
-  function handleScrollToBottom() {
-    const bottomElement = document.querySelector("footer"); // substitua "myFooter" pelo ID do elemento onde deseja rolar a página
-    bottomElement.scrollIntoView({ behavior: "smooth" }); // use "smooth" para rolar suavemente até o elemento
-  }
-
-  function handleInsertCoins(value) {
-    switch (value) {
-      case 0.5:
-        setCoinsQuantity50((prevCoins) => prevCoins + 1);
-        break;
-      case 0.2:
-        setCoinsQuantity20((prevCoins) => prevCoins + 1);
-        break;
-      case 0.1:
-        setCoinsQuantity10((prevCoins) => prevCoins + 1);
-        break;
-      default:
-        break;
-    }
-  }
-
-  // função para atualizar o estado de moedas inseridas
-  function handleInsertCoin() {
-    setInsertedCoins((prevCoins) => prevCoins + 0.2);
-    handleInsertCoins(0.2);
-    console.log(`Moeda de 0.20 cêntimos inserida`);
-    notifyCoinInserted(0.2);
-  }
-
-  // função para inserir moedas de 10 cêntimos
-  function handleInsertCoin10() {
-    setInsertedCoins((prevCoins) => prevCoins + 0.1);
-    handleInsertCoins(0.1);
-    console.log(`Moeda de 0.10 cêntimos inserida`);
-    notifyCoinInserted(0.1);
-  }
-
-  // função para inserir moedas de 50 cêntimos
-  function handleInsertCoin50() {
-    setInsertedCoins((prevCoins) => prevCoins + 0.5);
-    handleInsertCoins(0.5);
-    console.log(`Moeda de 0.50 cêntimos inserida`);
-    notifyCoinInserted(0.5);
-  }
-
-  // função para selecionar o produto desejado
-  function handleSelectProduct(product) {
-    setSelectedProduct(product);
-    notifyProductSelected(product);
+  function notifyPurchaseSuccessful() {
+    toast.success(`Compra realizada com sucesso!`, { autoClose: 1500 });
   }
 
   // função para concluir a compra
@@ -190,6 +71,9 @@ function VendingMachine() {
 
       if (change > 0) {
         console.log(`Troco a receber: € ${change.toFixed(2)}`);
+        toast.success(`O seu Troco é de € ${change.toFixed(2)}`, {
+          autoClose: 1500,
+        });
         alert(`Por favor, recolha o seu troco de € ${change.toFixed(2)}`);
       }
       setChangeCoins(0);
@@ -207,7 +91,6 @@ function VendingMachine() {
         `A sua bebida: ${selectedProduct.name} foi comprada com sucesso.`
       );
       alert(`Por favor recolha a sua ${selectedProduct.name}.`);
-      setSelectedProduct(null);
       window.scrollTo(0, 0);
     } else {
       console.log(`A sua bebida: ${selectedProduct.name} está indisponível.`);
@@ -224,24 +107,7 @@ function VendingMachine() {
       <h2 className="quant">Moedas de 50 Cent: {coinsQuantity50}</h2>
       <h2>Produtos disponíveis:</h2>
       <br></br>
-      <ul>
-        {products.map((product) => (
-          <li key={product.name}>
-            <img src={product.img} alt={product.name} />
-            {product.name} - € {product.price.toFixed(2)} ({product.quantity}{" "}
-            disponíveis)
-            <button
-              onClick={() => {
-                handleSelectProduct(product);
-                console.log(`Produto selecionado: ${product.name}`);
-                handleScrollToBottom();
-              }}
-            >
-              Selecionar
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Products products={products} setSelectedProduct={setSelectedProduct} />
       {selectedProduct && (
         <div>
           <h2>
@@ -287,15 +153,16 @@ function VendingMachine() {
               <img src="../img/sumol.png" alt="Sumol" />
             )}
           </div>
-          <button className="coin10-button" onClick={handleInsertCoin10}>
-            Inserir moeda de 10 cêntimos
-          </button>
-          <button className="coin-button" onClick={handleInsertCoin}>
-            Inserir moeda de 20 cêntimos
-          </button>
-          <button className="coin50-button" onClick={handleInsertCoin50}>
-            Inserir moeda de 50 cêntimos
-          </button>
+          <Coin
+            coinsQuantity50={coinsQuantity50}
+            coinsQuantity20={coinsQuantity20}
+            coinsQuantity10={coinsQuantity10}
+            insertedCoins={insertedCoins}
+            setCoinsQuantity50={setCoinsQuantity50}
+            setCoinsQuantity20={setCoinsQuantity20}
+            setCoinsQuantity10={setCoinsQuantity10}
+            setInsertedCoins={setInsertedCoins}
+          />
           <button className="purchase-button" onClick={handlePurchase}>
             Comprar
           </button>

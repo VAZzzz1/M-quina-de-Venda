@@ -158,6 +158,8 @@ button:active {
 
 .product-image-container img {
   width: 20%; /* reduzindo a altura da imagem */
+  position: relative;
+    top: 20px;
 }
 
 .coin-button {
@@ -177,7 +179,7 @@ button:active {
   color: var(--color);
   z-index: 1;
   left: 90px;
-  bottom: 10px;
+  top: 20px;
 }
 
 .coin-button::before,
@@ -235,7 +237,7 @@ button:active {
   color: var(--color);
   z-index: 1;
   left: 30px;
-  bottom: 5px;
+  top: 21px;
 }
 
 .coin10-button::before,
@@ -293,7 +295,7 @@ button:active {
   color: var(--color);
   z-index: 1;
   left: 30px;
-  top: 15px;
+  top: 45px;
 }
 
 .coin50-button::before,
@@ -350,8 +352,8 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  top: 10px;
-  left: 100px;
+  bottom: 25px;
+  left: 420px;
 }
 
 .purchase-button::before,
@@ -408,8 +410,8 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  left: 130px;
-  top: 9px;
+  left: 450px;
+  bottom: 25px;
 }
 
 .close-button::before,
