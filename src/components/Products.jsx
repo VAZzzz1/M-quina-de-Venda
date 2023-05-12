@@ -1,10 +1,19 @@
 import React from "react";
-import { useEffect } from "react";
 import "../css/style.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logAndStore } from './log';
 
 function Products(props) {
+
+  const getCurrentTime = () => {
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+    return `${hours}:${minutes} ${date.toLocaleDateString('pt-BR', options)}`;
+  }; 
+
   function handleScrollToBottom() {
     const bottomElement = document.querySelector("footer"); // substitua "myFooter" pelo ID do elemento onde deseja rolar a página
     bottomElement.scrollIntoView({ behavior: "smooth" }); // use "smooth" para rolar suavemente até o elemento
@@ -12,17 +21,9 @@ function Products(props) {
 
   function handleSelectProduct(product) {
     props.setSelectedProduct(product);
-    localStorage.setItem("selectedProduct", JSON.stringify(product.name));
+    logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
     notifyProductSelected(product);
   }  
-
-  useEffect(() => {
-    const storedProductName = JSON.parse(localStorage.getItem("selectedProduct"));
-    if (storedProductName) {
-      const selectedProduct = props.products.find(product => product.name === storedProductName);
-      props.setSelectedProduct(selectedProduct);
-    }
-  }, []);  
 
   function notifyProductSelected(product) {
     toast.success(`Produto ${product.name} selecionado!`, { autoClose: 1500 });
@@ -37,7 +38,6 @@ function Products(props) {
           <button
             onClick={() => {
               handleSelectProduct(product);
-              console.log(`Produto selecionado: ${product.name}`);
               handleScrollToBottom();
             }}
           >

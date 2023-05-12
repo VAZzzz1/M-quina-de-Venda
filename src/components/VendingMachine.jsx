@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Products from "./Products";
 import Coin from "./Coin";
+import Log from "./Log.jsx";
 import "../css/style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logAndStore } from './log';
 
 function VendingMachine() {
   const [coins, setCoins] = useState(31); // valor total em cêntimos
@@ -27,26 +29,6 @@ function VendingMachine() {
   
   const [products, setProducts] = useState(productData);
 
-  useEffect(() => {
-    localStorage.setItem("coins", coins);
-  }, [coins]);
-  
-  useEffect(() => {
-    localStorage.setItem("coinsQuantity20", coinsQuantity20);
-  }, [coinsQuantity20]);
-  
-  useEffect(() => {
-    localStorage.setItem("coinsQuantity10", coinsQuantity10);
-  }, [coinsQuantity10]);
-  
-  useEffect(() => {
-    localStorage.setItem("coinsQuantity50", coinsQuantity50);
-  }, [coinsQuantity50]);
-  
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
-  }, [products]); 
-
   const [selectedProduct, setSelectedProduct] = useState(null); // produto selecionado pelo utilizador
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
@@ -55,6 +37,14 @@ function VendingMachine() {
   function notifyPurchaseSuccessful() {
     toast.success(`${selectedProduct.name} comprada com sucesso!`, { autoClose: 2500 });
   }
+
+  const getCurrentTime = () => {
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+    return `${hours}:${minutes} ${date.toLocaleDateString('pt-BR', options)}`;
+  }; 
 
   // função para concluir a compra
   function handlePurchase() {
@@ -90,7 +80,7 @@ function VendingMachine() {
       setCoins((prevCoins) => prevCoins + selectedProduct.price - change);
 
       if (change > 0) {
-        console.log(`Troco a receber: € ${change.toFixed(2).toString()}`);
+        logAndStore(`Recebeu ${change.toFixed(2).toString()} cêntimos de troco - ${getCurrentTime()}`);
         toast.success(`Recebeu troco de € ${change.toFixed(2)}`, {
           autoClose: 2000,
         });
@@ -98,6 +88,7 @@ function VendingMachine() {
       setChangeCoins(0);
       setInsertedCoins(0);
       notifyPurchaseSuccessful(change);
+      logAndStore(`${selectedProduct.name} comprada com sucesso! - ${getCurrentTime()}`);
       setProducts((prevProducts) => {
         return prevProducts.map((product) => {
           if (product.name === selectedProduct.name) {
@@ -106,13 +97,8 @@ function VendingMachine() {
           return product;
         });
       });
-      console.log(
-        `A sua bebida: ${selectedProduct.name} foi comprada com sucesso.`
-      );
-      localStorage.setItem("changeCoins", change.toFixed(2));
       window.scrollTo(0, 0);
     } else {
-      console.log(`A sua bebida: ${selectedProduct.name} está indisponível.`);
       alert(`${selectedProduct.name} indisponível.`);
     }
   }
@@ -191,6 +177,7 @@ function VendingMachine() {
           >
             Fechar
           </button>
+          <Log />
           <ToastContainer />
         </div>
       )}

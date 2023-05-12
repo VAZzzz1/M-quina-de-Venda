@@ -2,8 +2,17 @@ import React from "react";
 import "../css/style.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { logAndStore } from './log';
 
 function Coin(props) {
+
+  const getCurrentTime = () => {
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
+    return `${hours}:${minutes} ${date.toLocaleDateString('pt-BR', options)}`;
+  }; 
 
   // função para exibir notificação de moedas inseridas
   function notifyCoinInserted(value) {
@@ -32,7 +41,7 @@ function Coin(props) {
   function handleInsertCoin() {
     props.setInsertedCoins((prevCoins) => prevCoins + 0.2);
     handleInsertCoins(0.2);
-    console.log(`Moeda de 0.20 cêntimos inserida`);
+    logAndStore(`Introduziu uma moeda de 0.20 cêntimos - ${getCurrentTime()}`);
     notifyCoinInserted(0.2);
   }
 
@@ -40,7 +49,7 @@ function Coin(props) {
   function handleInsertCoin10() {
     props.setInsertedCoins((prevCoins) => prevCoins + 0.1);
     handleInsertCoins(0.1);
-    console.log(`Moeda de 0.10 cêntimos inserida`);
+    logAndStore(`Introduziu uma moeda de 0.10 cêntimos - ${getCurrentTime()}`);
     notifyCoinInserted(0.1);
   }
 
@@ -48,7 +57,7 @@ function Coin(props) {
   function handleInsertCoin50() {
     props.setInsertedCoins((prevCoins) => prevCoins + 0.5);
     handleInsertCoins(0.5);
-    console.log(`Moeda de 0.50 cêntimos inserida`);
+    logAndStore(`Introduziu uma moeda de 0.50 cêntimos - ${getCurrentTime()}`);
     notifyCoinInserted(0.5);
   }
 

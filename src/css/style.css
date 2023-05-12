@@ -595,3 +595,196 @@ nav {
     transform: rotate(360deg);
   }
 }
+
+.log {
+  position: relative;
+  top: 30px;
+}
+
+.log-button {
+  --color: white;
+  padding: 0.8em 2.7em; /* aumenta o padding para 2.7em */
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  left: 30px; /* altera o valor de left para 150px */
+  bottom: 25px;
+  width: 95%;
+}
+
+.log-button::before,
+.log-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.log-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.log-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.log-button:hover::before,
+.log-button:hover::after {
+  height: 410px;
+  width: 810px;
+}
+
+.log-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.log-button:active {
+  filter: brightness(0.8);
+}
+
+.fecha-button {
+  --color: transparent;
+  padding: 0.8em 2.7em; /* aumenta o padding para 2.7em */
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: white;
+  z-index: 1;
+  left: 290px; /* altera o valor de left para 150px */
+  bottom: 10px;
+}
+
+
+
+.fecha-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.fecha-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.fecha-button:hover::before,
+.fecha-button:hover::after {
+  height: 210px;
+  width: 210px;
+}
+
+.fecha-button:hover {
+  color: red;
+}
+
+.fecha-button:active {
+  filter: brightness(0.8);
+}
+
+#modal {
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal:empty {
+  display: none;
+}
+
+#modal > div {
+  background-color: #00000093;
+  max-width: 80%;
+  height: 90%;
+  padding: 45px;
+  border-radius: 30px;
+}
+
+#modal .buttons button {
+  display: inline-block;
+  transition: .4s;
+}
+
+#modal div div {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 98%;
+}
+
+#modal .buttons button {
+  border-radius: 15px;
+  padding: 10px;
+  width: 100px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+#modal .buttons {
+  height: auto;
+}
+
+.historico {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+}
+
+.historico h2
+{
+  position: absolute;
+    top: 55px;
+}
+
+.historico .lista ul li {
+  list-style: none;
+  padding: 30px;
+  font-size: 18px;
+  border-bottom: 1px solid #ffffff;
+}
+
+.lista {
+  overflow-y: scroll;
+  padding: 0px 30px 0px 30px;
+}
+
+.historico ul li span{
+  font-weight: bold;
+}
