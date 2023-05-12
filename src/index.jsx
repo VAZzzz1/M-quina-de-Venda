@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import VendingMachine from "./VendingMachine";
+import VendingMachine from "./components/VendingMachine";
 import Footer from "./footer";
 import Navbar from "./navbar";
 

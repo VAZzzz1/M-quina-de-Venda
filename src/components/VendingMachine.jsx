@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Products from "./Products";
 import Coin from "./Coin";
-import "./style.css";
+import "../css/style.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

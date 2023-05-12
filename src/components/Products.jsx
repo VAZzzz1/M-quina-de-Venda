@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import "./style.css";
+import "../css/style.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
