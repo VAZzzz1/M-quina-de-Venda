@@ -3,7 +3,7 @@ import Products from "./Products";
 import Coin from "./Coin";
 import Log from "./Log.jsx";
 import "../css/style.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logAndStore } from './log';
 
@@ -13,7 +13,7 @@ function VendingMachine() {
   const [coinsQuantity10, setCoinsQuantity10] = useState(60); // quantidade de moedas de 10 cêntimos no moedeiro
   const [coinsQuantity50, setCoinsQuantity50] = useState(30); // quantidade de moedas de 50 cêntimos no moedeiro
   const productData = [
-    { name: "Coca-Cola", price: 1.2, quantity: 10, img: "../img/coca-cola.png" },
+    { name: "Coca-Cola", price: 1.2, quantity: 1, img: "../img/coca-cola.png" },
     { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
     { name: "USMug Beer", price: 7.0, quantity: 8, img: "../img/mugbeer.png" },
     { name: "Canada Dryy", price: 1.6, quantity: 6, img: "../img/canadadry.png" },
@@ -24,26 +24,24 @@ function VendingMachine() {
     { name: "Mount Dew", price: 2.65, quantity: 5, img: "../img/mountaindew.png" },
     { name: "SodaPepsi", price: 0.8, quantity: 10, img: "../img/pepsi.png" },
     { name: "Seven Up", price: 0.8, quantity: 10, img: "../img/sevenup.png" },
-    { name: "SodaSumol", price: 0.63, quantity: 9, img: "../img/sumol.png" },
+    { name: "SodaSumol", price: 0.63, quantity: 2, img: "../img/sumol.png" },
   ];
   
   const [products, setProducts] = useState(productData);
-
   const [selectedProduct, setSelectedProduct] = useState(null); // produto selecionado pelo utilizador
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
 
-  // função para exibir notificação de compra bem sucedida
-  function notifyPurchaseSuccessful() {
-    toast.success(`${selectedProduct.name} comprada com sucesso!`, { autoClose: 2500 });
-  }
-
   const getCurrentTime = () => {
     const date = new Date();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
-    return `${hours}:${minutes} ${date.toLocaleDateString('pt-BR', options)}`;
+    const options = {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    };
+    return `${date.toLocaleDateString('pt-PT', options)}`;
   }; 
 
   // função para concluir a compra
@@ -81,13 +79,14 @@ function VendingMachine() {
 
       if (change > 0) {
         logAndStore(`Recebeu ${change.toFixed(2).toString()} cêntimos de troco - ${getCurrentTime()}`);
-        toast.success(`Recebeu troco de € ${change.toFixed(2)}`, {
+        alert(`Recebeu troco de € ${change.toFixed(2)}`, {
           autoClose: 2000,
         });
       }
       setChangeCoins(0);
       setInsertedCoins(0);
-      notifyPurchaseSuccessful(change);
+      setSelectedProduct(null);
+      alert(`${selectedProduct.name} comprada com sucesso! `);  
       logAndStore(`${selectedProduct.name} comprada com sucesso! - ${getCurrentTime()}`);
       setProducts((prevProducts) => {
         return prevProducts.map((product) => {
@@ -99,7 +98,7 @@ function VendingMachine() {
       });
       window.scrollTo(0, 0);
     } else {
-      alert(`${selectedProduct.name} indisponível.`);
+      alert(`Valor Insuficiente para comprar a bebida: ${selectedProduct.name}.`);
     }
   }
 

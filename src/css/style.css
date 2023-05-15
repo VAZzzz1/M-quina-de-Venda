@@ -73,6 +73,27 @@ li {
   margin: 1.5em 0;
 }
 
+button.moedas
+{
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  position: relative;
+  left: 80px;
+}
+
 button {
   --color: white;
   padding: 0.8em 1.7em;
@@ -159,7 +180,7 @@ button:active {
 .product-image-container img {
   width: 20%; /* reduzindo a altura da imagem */
   position: relative;
-    top: 20px;
+  top: 20px;
 }
 
 .coin-button {
@@ -680,8 +701,6 @@ nav {
   bottom: 10px;
 }
 
-
-
 .fecha-button::before {
   top: -1em;
   left: -1em;
@@ -733,7 +752,7 @@ nav {
 
 #modal .buttons button {
   display: inline-block;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 #modal div div {
@@ -767,10 +786,9 @@ nav {
   align-items: start;
 }
 
-.historico h2
-{
+.historico h2 {
   position: absolute;
-    top: 55px;
+  top: 55px;
 }
 
 .historico .lista ul li {
@@ -785,6 +803,6 @@ nav {
   padding: 0px 30px 0px 30px;
 }
 
-.historico ul li span{
+.historico ul li span {
   font-weight: bold;
 }
