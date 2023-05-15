@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { logAndStore } from "./log";
 
 function Products(props) {
-  
   const getCurrentTime = () => {
     const date = new Date();
     const options = {

@@ -12,7 +12,7 @@ function VendingMachine() {
   const [coinsQuantity20, setCoinsQuantity20] = useState(50); // quantidade de moedas de 20 cêntimos no moedeiro
   const [coinsQuantity10, setCoinsQuantity10] = useState(60); // quantidade de moedas de 10 cêntimos no moedeiro
   const [coinsQuantity50, setCoinsQuantity50] = useState(30); // quantidade de moedas de 50 cêntimos no moedeiro
-  const productData = [
+  const defaultProducts = [
     { name: "Coca-Cola", price: 1.2, quantity: 1, img: "../img/coca-cola.png" },
     { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
     { name: "USMug Beer", price: 7.0, quantity: 8, img: "../img/mugbeer.png" },
@@ -25,9 +25,8 @@ function VendingMachine() {
     { name: "SodaPepsi", price: 0.8, quantity: 10, img: "../img/pepsi.png" },
     { name: "Seven Up", price: 0.8, quantity: 10, img: "../img/sevenup.png" },
     { name: "SodaSumol", price: 0.63, quantity: 2, img: "../img/sumol.png" },
-  ];
+  ]; 
   
-  const [products, setProducts] = useState(productData);
   const [selectedProduct, setSelectedProduct] = useState(null); // produto selecionado pelo utilizador
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
@@ -42,7 +41,7 @@ function VendingMachine() {
       minute: 'numeric'
     };
     return `${date.toLocaleDateString('pt-PT', options)}`;
-  }; 
+  };  
 
   // função para concluir a compra
   function handlePurchase() {
@@ -88,19 +87,28 @@ function VendingMachine() {
       setSelectedProduct(null);
       alert(`${selectedProduct.name} comprada com sucesso! `);  
       logAndStore(`${selectedProduct.name} comprada com sucesso! - ${getCurrentTime()}`);
-      setProducts((prevProducts) => {
-        return prevProducts.map((product) => {
-          if (product.name === selectedProduct.name) {
-            return { ...product, quantity: product.quantity - 1 };
+      products.forEach((product) => {
+        if (selectedProduct && selectedProduct.name === product.name) {
+          if (selectedProduct.quantity !== 0) {
+            product.quantity = selectedProduct.quantity - 1;
+            updateDrinksInLocalStorage();
           }
-          return product;
-        });
+        }
       });
       window.scrollTo(0, 0);
     } else {
       alert(`Valor Insuficiente para comprar a bebida: ${selectedProduct.name}.`);
     }
   }
+
+  const storedProducts = localStorage.getItem("products");
+
+  // se o objeto de moedas existir, use-o. Se não, use o objeto de moedas padrão.
+  const products = storedProducts ? JSON.parse(storedProducts) : defaultProducts;
+
+  const updateDrinksInLocalStorage = () => {
+    localStorage.setItem("products", JSON.stringify(products));
+  };
 
   return (
     <div className="vending-machine">
