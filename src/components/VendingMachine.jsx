@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Products from "./Products";
 import Coin from "./Coin";
 import Log from "./Log.jsx";
@@ -8,10 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { logAndStore } from './log';
 
 function VendingMachine() {
-  const [coins, setCoins] = useState(31); // valor total em cêntimos
-  const [coinsQuantity20, setCoinsQuantity20] = useState(50); // quantidade de moedas de 20 cêntimos no moedeiro
-  const [coinsQuantity10, setCoinsQuantity10] = useState(60); // quantidade de moedas de 10 cêntimos no moedeiro
-  const [coinsQuantity50, setCoinsQuantity50] = useState(30); // quantidade de moedas de 50 cêntimos no moedeiro
+  const defaultCoins = {
+    coins: 31,
+    coinsQuantity20: 50,
+    coinsQuantity10: 60,
+    coinsQuantity50: 30,
+  }; 
+  const [coins, setCoins] = useState(defaultCoins.coins);
+  const [coinsQuantity20, setCoinsQuantity20] = useState(defaultCoins.coinsQuantity20);
+  const [coinsQuantity10, setCoinsQuantity10] = useState(defaultCoins.coinsQuantity10);
+  const [coinsQuantity50, setCoinsQuantity50] = useState(defaultCoins.coinsQuantity50);  
   const defaultProducts = [
     { name: "Coca-Cola", price: 1.2, quantity: 1, img: "../img/coca-cola.png" },
     { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
@@ -31,6 +37,15 @@ function VendingMachine() {
   const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
   const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
 
+  useEffect(() => {
+    const coinsData = JSON.parse(localStorage.getItem("coins"));
+    setCoins(coinsData.coins);
+    setCoinsQuantity20(coinsData.coinsQuantity20);
+    setCoinsQuantity10(coinsData.coinsQuantity10);
+    setCoinsQuantity50(coinsData.coinsQuantity50);
+  }, []);
+  
+
   const getCurrentTime = () => {
     const date = new Date();
     const options = {
@@ -42,6 +57,15 @@ function VendingMachine() {
     };
     return `${date.toLocaleDateString('pt-PT', options)}`;
   };  
+
+  if (!localStorage.getItem("coins")) {
+    localStorage.setItem("coins", JSON.stringify(defaultCoins));
+  }     
+
+  const coinsData = JSON.parse(localStorage.getItem("coins"));
+
+  // exemplo de como acessar a quantidade de moedas de 20 cêntimos
+  console.log(coinsData.coinsQuantity20);
 
   // função para concluir a compra
   function handlePurchase() {

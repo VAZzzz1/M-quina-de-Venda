@@ -26,19 +26,24 @@ function Coin(props) {
   }
 
   function handleInsertCoins(value) {
+    const coinsData = JSON.parse(localStorage.getItem("coins"));
+
     switch (value) {
       case 0.5:
-        props.setCoinsQuantity50((prevCoins) => prevCoins + 1);
+        coinsData.coinsQuantity50++;
         break;
       case 0.2:
-        props.setCoinsQuantity20((prevCoins) => prevCoins + 1);
+        coinsData.coinsQuantity20++;
         break;
       case 0.1:
-        props.setCoinsQuantity10((prevCoins) => prevCoins + 1);
+        coinsData.coinsQuantity10++;
         break;
       default:
         break;
     }
+
+    coinsData.coins += value;
+    localStorage.setItem("coins", JSON.stringify(coinsData));
   }
 
   // função para atualizar o estado de moedas inseridas
