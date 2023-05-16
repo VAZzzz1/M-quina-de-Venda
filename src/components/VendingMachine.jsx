@@ -71,17 +71,14 @@ function VendingMachine() {
       insertedCoins + changeCoins >= selectedProduct.price &&
       selectedProduct.quantity > 0
     ) {
-      // Calcula o troco
       const change = insertedCoins + changeCoins - selectedProduct.price;
-      // Calculates the number of coins of each denomination needed to give the change
       let num50Coins = Math.floor(change / 50);
       let num10Coins = Math.floor((change % 50) / 10);
-      let num20Coins = Math.floor(((change % 50) % 10) / 0.2); // adiciona o cálculo das moedas de 20 centavos
+      let num20Coins = Math.floor(((change % 50) % 10) / 0.2); 
       if (change > coins + coinsQuantity10 * 10 + coinsQuantity50 * 50) {
         alert("Desculpe, não há moedas suficientes para dar o troco.");
         return;
       }
-      // Updates the state of the coins and their quantities
       setCoins(
         (prevCoins) => prevCoins + insertedCoins - selectedProduct.price
       );
