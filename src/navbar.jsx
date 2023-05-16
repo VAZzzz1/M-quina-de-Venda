@@ -12,7 +12,7 @@ const Navbar = () => {
       setTimeout(() => {
         window.location.reload();
       });
-    }, 2000); // Simulando um carregamento de 2 segundos
+    }, 2000);
   };  
 
   return (
