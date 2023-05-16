@@ -42,33 +42,17 @@ function Products(props) {
   }
 
   function handleSelectProduct(product) {
-    // Cria um objeto com as informações do produto selecionado
-    const selectedProduct = {
-      name: product.name,
-      price: product.price,
-      quantity: product.quantity
-    };
-  
-    // Recupera o valor armazenado no localStorage ou um array vazio se não houver nada armazenado
-    const purchasedProducts = JSON.parse(localStorage.getItem('purchasedProducts')) || [];
-  
-    // Adiciona o produto selecionado ao array de produtos comprados
-    purchasedProducts.push(selectedProduct);
-  
-    // Converte o array de produtos comprados em uma string JSON e armazena no localStorage
-    localStorage.setItem('purchasedProducts', JSON.stringify(purchasedProducts));
-  
-    if (product.quantity <= 0) {
-      alert("Este produto está esgotado. Por favor, selecione outro produto.");
-      return;
-    }
-  
-    props.setSelectedProduct(product);
-    setInsertedCoins((prev) => prev - product.price);
-    logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
-    notifyProductSelected(product);
-  }
-  
+  if (product.quantity <= 0) {
+    alert("Este produto está esgotado. Por favor, selecione outro produto.");
+    return;
+  }  
+
+  props.setSelectedProduct(product);
+  setInsertedCoins((prev) => prev - product.price);
+  logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
+  notifyProductSelected(product);
+}
+
 
   function notifyProductSelected(product) {
     toast.success(`Produto ${product.name} selecionado!`, { autoClose: 1500 });

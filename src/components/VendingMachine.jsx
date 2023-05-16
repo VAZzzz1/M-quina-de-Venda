@@ -6,6 +6,7 @@ import "../css/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logAndStore } from './log';
+import { StoreCompras } from "./compras";
 
 function VendingMachine() {
   const defaultCoins = {
@@ -113,6 +114,13 @@ function VendingMachine() {
           }
         }
       });
+      StoreCompras([
+        {
+          nome: selectedProduct.name,
+          price: selectedProduct.price,
+          quantidade: selectedProduct.quantity,
+        },
+      ])
       window.scrollTo(0, 0);
     } else {
       alert(`Valor Insuficiente para comprar a bebida: ${selectedProduct.name}.`);
