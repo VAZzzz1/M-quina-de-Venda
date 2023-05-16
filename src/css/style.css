@@ -359,7 +359,7 @@ button:active {
 
 .purchase-button {
   --color: white;
-  padding: 0.8em 1.7em;
+  padding: 0.8em 6.9em;
   background-color: transparent;
   border-radius: 0.3em;
   position: relative;
@@ -374,7 +374,7 @@ button:active {
   color: var(--color);
   z-index: 1;
   bottom: 25px;
-  left: 420px;
+  left: 409px;
 }
 
 .purchase-button::before,

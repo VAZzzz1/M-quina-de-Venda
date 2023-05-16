@@ -195,12 +195,6 @@ function VendingMachine() {
           <button className="purchase-button" onClick={handlePurchase}>
             Comprar
           </button>
-          <button
-            className="close-button"
-            onClick={() => setSelectedProduct(null)}
-          >
-            Fechar
-          </button>
           <Log />
           <ToastContainer />
         </div>
