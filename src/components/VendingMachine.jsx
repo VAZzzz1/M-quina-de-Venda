@@ -33,9 +33,9 @@ function VendingMachine() {
     { name: "SodaSumol", price: 0.63, quantity: 2, img: "../img/sumol.png" },
   ]; 
   
-  const [selectedProduct, setSelectedProduct] = useState(null); // produto selecionado pelo utilizador
-  const [insertedCoins, setInsertedCoins] = useState(0); // moedas inseridas pelo utilizador
-  const [changeCoins, setChangeCoins] = useState(0); // moedas de troco
+  const [selectedProduct, setSelectedProduct] = useState(null); 
+  const [insertedCoins, setInsertedCoins] = useState(0); 
+  const [changeCoins, setChangeCoins] = useState(0); 
 
   useEffect(() => {
     const coinsData = JSON.parse(localStorage.getItem("coins"));
@@ -45,7 +45,6 @@ function VendingMachine() {
     setCoinsQuantity50(coinsData.coinsQuantity50);
   }, []);
   
-
   const getCurrentTime = () => {
     const date = new Date();
     const options = {
@@ -63,11 +62,9 @@ function VendingMachine() {
   }     
 
   const coinsData = JSON.parse(localStorage.getItem("coins"));
-
-  // exemplo de como acessar a quantidade de moedas de 20 cêntimos
-  console.log(coinsData.coinsQuantity20);
-
-  // função para concluir a compra
+  
+  console.log(coinsData);
+  
   function handlePurchase() {
     if (
       selectedProduct &&
@@ -126,8 +123,7 @@ function VendingMachine() {
   }
 
   const storedProducts = localStorage.getItem("products");
-
-  // se o objeto de moedas existir, use-o. Se não, use o objeto de moedas padrão.
+  
   const products = storedProducts ? JSON.parse(storedProducts) : defaultProducts;
 
   const updateDrinksInLocalStorage = () => {

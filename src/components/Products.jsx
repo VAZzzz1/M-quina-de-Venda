@@ -18,8 +18,8 @@ function Products(props) {
   }; 
 
   function handleScrollToBottom() {
-    const bottomElement = document.querySelector("footer"); // substitua "myFooter" pelo ID do elemento onde deseja rolar a página
-    bottomElement.scrollIntoView({ behavior: "smooth" }); // use "smooth" para rolar suavemente até o elemento
+    const bottomElement = document.querySelector("footer");
+    bottomElement.scrollIntoView({ behavior: "smooth" }); 
   }
 
   const [insertedCoins, setInsertedCoins] = useState(0);
