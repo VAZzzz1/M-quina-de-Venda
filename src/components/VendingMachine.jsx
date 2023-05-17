@@ -6,7 +6,9 @@ import "../css/style.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logAndStore } from './log';
-import { StoreCompras } from "./compras";
+import { StoreCompras } from "./Compras";
+import { StoreGanhos } from "./Ganhos";
+import GraphModal from "./Grafico";
 
 function VendingMachine() {
   const defaultCoins = {
@@ -14,11 +16,13 @@ function VendingMachine() {
     coinsQuantity20: 50,
     coinsQuantity10: 60,
     coinsQuantity50: 30,
+    coinsQuantity100: 10,
   }; 
   const [coins, setCoins] = useState(defaultCoins.coins);
   const [coinsQuantity20, setCoinsQuantity20] = useState(defaultCoins.coinsQuantity20);
   const [coinsQuantity10, setCoinsQuantity10] = useState(defaultCoins.coinsQuantity10);
   const [coinsQuantity50, setCoinsQuantity50] = useState(defaultCoins.coinsQuantity50);  
+  const [coinsQuantity100, setCoinsQuantity100] = useState(defaultCoins.coinsQuantity100);  
   const defaultProducts = [
     { name: "Coca-Cola", price: 1.2, quantity: 1, img: "../img/coca-cola.png" },
     { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
@@ -44,7 +48,55 @@ function VendingMachine() {
     setCoinsQuantity20(coinsData.coinsQuantity20);
     setCoinsQuantity10(coinsData.coinsQuantity10);
     setCoinsQuantity50(coinsData.coinsQuantity50);
+    setCoinsQuantity100(coinsData.coinsQuantity100);
   }, []);
+
+  const storedDadosMessages = localStorage.getItem("dadosMessages");
+
+  const dadosMessages = storedDadosMessages
+    ? JSON.parse(storedDadosMessages)
+    : null;
+
+  const updateDadosInLocalStorage = () => {
+    localStorage.setItem("dadosMessages", JSON.stringify(dadosMessages));
+  };
+
+  const compras = (price) => {
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+
+    if (dadosMessages !== null) {
+      dadosMessages.forEach((dado) => {
+        if (dado.day === now.getDate()) {
+          dado.price += selectedProduct.price;
+          updateDadosInLocalStorage();
+          return;
+        } else {
+          StoreCompras([
+            {
+              day: day,
+              price: price,
+              month: month,
+              year: year,
+            },
+          ]);
+          return;
+        }
+      });
+    } else {
+      StoreCompras([
+        {
+          day: day,
+          price: price,
+          month: month,
+          year: year,
+        },
+      ]);
+    }
+  };
+
   
   const getCurrentTime = () => {
     const date = new Date();
@@ -73,15 +125,15 @@ function VendingMachine() {
       selectedProduct.quantity > 0
     ) {
       const change = insertedCoins + changeCoins - selectedProduct.price;
+      let num100Coins = Math.floor(change / 100);
       let num50Coins = Math.floor(change / 50);
       let num10Coins = Math.floor((change % 50) / 10);
       let num20Coins = Math.floor(((change % 50) % 10) / 0.2); 
-      if (change > coins + coinsQuantity10 * 10 + coinsQuantity50 * 50) {
-        alert("Desculpe, não há moedas suficientes para dar o troco.");
-        return;
-      }
       setCoins(
         (prevCoins) => prevCoins + insertedCoins - selectedProduct.price
+      );
+      setCoinsQuantity100(
+        (prevCoinsQuantity100) => prevCoinsQuantity100 - num100Coins
       );
       setCoinsQuantity50(
         (prevCoinsQuantity50) => prevCoinsQuantity50 - num50Coins
@@ -114,12 +166,11 @@ function VendingMachine() {
           }
         }
       });
-      StoreCompras([
+      compras(selectedProduct.price);
+      StoreGanhos([
         {
-          nome: selectedProduct.name,
-          price: selectedProduct.price,
-          quantidade: selectedProduct.quantity,
-        },
+          Ganhos: selectedProduct.price,
+        }
       ])
       window.scrollTo(0, 0);
     } else {
@@ -136,22 +187,36 @@ function VendingMachine() {
   };
 
   return (
+    <div className="body">
     <div className="vending-machine">
       <h2 className="total">Valor total: € {coins.toFixed(2)}</h2>
       <h2 className="quantidade">Quantidade de Moedas:</h2>
       <h2 className="quant">Moedas de 20 Cent: {coinsQuantity20}</h2>
       <h2 className="quant">Moedas de 10 Cent: {coinsQuantity10}</h2>
       <h2 className="quant">Moedas de 50 Cent: {coinsQuantity50}</h2>
-      <h2>Produtos disponíveis:</h2>
-      <br></br>
-      <Products products={products} setSelectedProduct={setSelectedProduct} />
+      <h2 className="quant">Moedas de 1 Euro: {coinsQuantity100}</h2>
+      <Coin
+            coinsQuantity100={coinsQuantity100}
+            coinsQuantity50={coinsQuantity50}
+            coinsQuantity20={coinsQuantity20}
+            coinsQuantity10={coinsQuantity10}
+            insertedCoins={insertedCoins}
+            setCoinsQuantity100={setCoinsQuantity100}
+            setCoinsQuantity50={setCoinsQuantity50}
+            setCoinsQuantity20={setCoinsQuantity20}
+            setCoinsQuantity10={setCoinsQuantity10}
+            setInsertedCoins={setInsertedCoins}
+          />
+      <h2 className="prod">Produtos disponíveis:</h2>
+      
+      <Products products={products} setSelectedProduct={setSelectedProduct} insertedCoins={insertedCoins} />
       {selectedProduct && (
         <div>
-          <h2>
+          <h2 className="ps">
             Produto selecionado: {selectedProduct.name} - €{" "}
             {selectedProduct.price.toFixed(2)}
           </h2>
-          <h2>Valor inserido: € {insertedCoins.toFixed(2)}</h2>
+          <h2 className="vi">Valor inserido: € {insertedCoins.toFixed(2)}</h2>
           <div className="product-image-container">
             {selectedProduct.name === "Coca-Cola" && (
               <img src="../img/coca-cola.png" alt="Coca-Cola" />
@@ -190,23 +255,16 @@ function VendingMachine() {
               <img src="../img/sumol.png" alt="Sumol" />
             )}
           </div>
-          <Coin
-            coinsQuantity50={coinsQuantity50}
-            coinsQuantity20={coinsQuantity20}
-            coinsQuantity10={coinsQuantity10}
-            insertedCoins={insertedCoins}
-            setCoinsQuantity50={setCoinsQuantity50}
-            setCoinsQuantity20={setCoinsQuantity20}
-            setCoinsQuantity10={setCoinsQuantity10}
-            setInsertedCoins={setInsertedCoins}
-          />
+          
           <button className="purchase-button" onClick={handlePurchase}>
-            Comprar
+            Comprar Bebida
           </button>
+          <GraphModal/>
           <Log />
           <ToastContainer />
         </div>
       )}
+    </div>
     </div>
   );
 }

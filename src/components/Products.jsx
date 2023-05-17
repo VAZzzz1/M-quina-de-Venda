@@ -8,51 +8,34 @@ function Products(props) {
   const getCurrentTime = () => {
     const date = new Date();
     const options = {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
     };
-    return `${date.toLocaleDateString('pt-PT', options)}`;
-  }; 
+    return `${date.toLocaleDateString("pt-PT", options)}`;
+  };
 
   function handleScrollToBottom() {
     const bottomElement = document.querySelector("footer");
-    bottomElement.scrollIntoView({ behavior: "smooth" }); 
+    bottomElement.scrollIntoView({ behavior: "smooth" });
   }
 
+  // eslint-disable-next-line no-unused-vars
   const [insertedCoins, setInsertedCoins] = useState(0);
 
-  function handleInsertCoins() {
-
-    const coinValue = parseFloat(prompt("Insira o valor das suas moedas:"));
-
-    if (
-      !coinValue ||
-      (coinValue !== 0.1 && coinValue !== 0.2 && coinValue !== 0.5)
-    ) {
-      alert("Por favor, insira com moedas de 0.10, 0.20 ou 0.50 cêntimos!");
+  function handleSelectProduct(product) {
+    if (product.quantity <= 0) {
+      alert("Este produto está esgotado. Por favor, selecione outro produto.");
       return;
     }
 
-    setInsertedCoins((prev) => prev + coinValue);
-
-    alert(`€ ${coinValue.toFixed(2)} inseridos!`, { autoClose: 1500 });
+    props.setSelectedProduct(product);
+    setInsertedCoins((prev) => prev - product.price);
+    logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
+    notifyProductSelected(product);
   }
-
-  function handleSelectProduct(product) {
-  if (product.quantity <= 0) {
-    alert("Este produto está esgotado. Por favor, selecione outro produto.");
-    return;
-  }  
-
-  props.setSelectedProduct(product);
-  setInsertedCoins((prev) => prev - product.price);
-  logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
-  notifyProductSelected(product);
-}
-
 
   function notifyProductSelected(product) {
     toast.success(`Produto ${product.name} selecionado!`, { autoClose: 1500 });
@@ -67,7 +50,7 @@ function Products(props) {
           disponíveis)
           {product.quantity > 0 && (
             <>
-              {insertedCoins >= product.price ? (
+              {props.insertedCoins >= product.price ? (
                 <button
                   onClick={() => {
                     handleSelectProduct(product);
@@ -81,9 +64,6 @@ function Products(props) {
                   Insira moedas suficientes
                 </span>
               )}
-              <button className="moedas" onClick={handleInsertCoins}>
-                Inserir Moedas
-              </button>
             </>
           )}
           {product.quantity === 0 && (

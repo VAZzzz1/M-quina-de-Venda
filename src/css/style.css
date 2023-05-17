@@ -35,6 +35,13 @@ h2.quant {
   color: white;
 }
 
+h2.ps, h2.vi
+{
+  position: relative;
+  top: 200px;
+  color: white;
+}
+
 button {
   font-size: 1.5em;
   position: relative;
@@ -67,14 +74,15 @@ ul {
   list-style: none;
   padding: 0;
   color: white;
+  position: relative;
+  top: 150px;
 }
 
 li {
   margin: 1.5em 0;
 }
 
-button.moedas
-{
+button.moedas {
   --color: white;
   padding: 0.8em 1.7em;
   background-color: transparent;
@@ -150,15 +158,22 @@ button:active {
   filter: brightness(0.8);
 }
 
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .vending-machine {
   background-color: #00000093;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 35px;
   width: 800px;
-  margin: 0 auto;
   position: relative;
   top: 70px;
+  margin-bottom: 150px;
+  height: 4980px;
 }
 
 .product-list {
@@ -178,9 +193,9 @@ button:active {
 }
 
 .product-image-container img {
-  width: 20%; /* reduzindo a altura da imagem */
+  width: 20%; 
   position: relative;
-  top: 20px;
+  top: 200px;
 }
 
 .coin-button {
@@ -199,8 +214,8 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  left: 90px;
-  top: 20px;
+  left: 70px;
+  top: -95px;
 }
 
 .coin-button::before,
@@ -257,8 +272,8 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  left: 30px;
-  top: 21px;
+  left: 40px;
+  top: -95px;
 }
 
 .coin10-button::before,
@@ -299,6 +314,65 @@ button:active {
   filter: brightness(0.8);
 }
 
+.coin100-button {
+  --color: white;
+  padding: 0.8em 1.7em;
+  background-color: transparent;
+  border-radius: 0.3em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 17px;
+  border: 1px solid;
+  font-family: inherit;
+  text-transform: uppercase;
+  color: var(--color);
+  z-index: 1;
+  left: 70px;
+  top: -55px;
+  width: 43.5%;
+}
+
+.coin100-button::before,
+.coin100-button::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--color);
+  transition: 1s ease;
+}
+
+.coin100-button::before {
+  top: -1em;
+  left: -1em;
+}
+
+.coin100-button::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.coin100-button:hover::before,
+.coin100-button:hover::after {
+  height: 410px;
+  width: 410px;
+}
+
+.coin100-button:hover {
+  color: rgb(10, 25, 30);
+}
+
+.coin100-button:active {
+  filter: brightness(0.8);
+}
+
 .coin50-button {
   --color: white;
   padding: 0.8em 1.7em;
@@ -315,8 +389,8 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  left: 30px;
-  top: 45px;
+  left: 40px;
+  top: -55px;
 }
 
 .coin50-button::before,
@@ -359,7 +433,7 @@ button:active {
 
 .purchase-button {
   --color: white;
-  padding: 0.8em 6.9em;
+  padding: 0.8em 16.1em;
   background-color: transparent;
   border-radius: 0.3em;
   position: relative;
@@ -373,8 +447,9 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  bottom: 25px;
-  left: 409px;
+  width: 100%;
+  left: 10px;
+  top: 170px;
 }
 
 .purchase-button::before,
@@ -404,7 +479,7 @@ button:active {
 .purchase-button:hover::before,
 .purchase-button:hover::after {
   height: 410px;
-  width: 410px;
+  width: 810px;
 }
 
 .purchase-button:hover {
@@ -415,9 +490,9 @@ button:active {
   filter: brightness(0.8);
 }
 
-.close-button {
+.graph-button {
   --color: white;
-  padding: 0.8em 1.7em;
+  padding: 0.8em 13.7em;
   background-color: transparent;
   border-radius: 0.3em;
   position: relative;
@@ -431,12 +506,13 @@ button:active {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  left: 450px;
-  bottom: 25px;
+  width: 100%;
+  left: 10px;
+  top: 195px;
 }
 
-.close-button::before,
-.close-button::after {
+.graph-button::before,
+.graph-button::after {
   content: "";
   display: block;
   width: 50px;
@@ -449,27 +525,27 @@ button:active {
   transition: 1s ease;
 }
 
-.close-button::before {
+.graph-button::before {
   top: -1em;
   left: -1em;
 }
 
-.close-button::after {
+.graph-button::after {
   left: calc(100% + 1em);
   top: calc(100% + 1em);
 }
 
-.close-button:hover::before,
-.close-button:hover::after {
+.graph-button:hover::before,
+.graph-button:hover::after {
   height: 410px;
-  width: 410px;
+  width: 810px;
 }
 
-.close-button:hover {
+.graph-button:hover {
   color: rgb(10, 25, 30);
 }
 
-.close-button:active {
+.graph-button:active {
   filter: brightness(0.8);
 }
 
@@ -516,8 +592,7 @@ footer {
   background-color: #f1f1f1;
   padding: 10px;
   text-align: center;
-  position: absolute;
-  top: 620%;
+  position: relative;
   width: 100%;
   right: 5px;
   font-size: 20px;
@@ -525,6 +600,7 @@ footer {
   font-weight: bold;
   color: #2d384b;
   left: 0;
+  bottom: 0;
 }
 
 a {
@@ -579,6 +655,7 @@ nav {
   border-bottom: 2px solid transparent; /* Adiciona um sublinhado transparente */
   position: relative;
   right: 50px;
+  bottom: 150px;
 }
 
 .navbar-links a:hover {
@@ -617,10 +694,6 @@ nav {
   }
 }
 
-.log {
-  position: relative;
-  top: 30px;
-}
 
 .log-button {
   --color: white;
@@ -638,9 +711,9 @@ nav {
   text-transform: uppercase;
   color: var(--color);
   z-index: 1;
-  left: 30px; /* altera o valor de left para 150px */
-  bottom: 25px;
-  width: 95%;
+  width: 100%;
+  left: 10px;
+  top: 220px;
 }
 
 .log-button::before,
@@ -725,6 +798,12 @@ nav {
   filter: brightness(0.8);
 }
 
+h2.prod {
+  position: relative;
+  top: 120px;
+  color: white;
+}
+
 #modal {
   background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
@@ -784,6 +863,7 @@ nav {
   display: flex;
   justify-content: start;
   align-items: start;
+  width: 700px;
 }
 
 .historico h2 {

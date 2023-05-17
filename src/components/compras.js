@@ -1,7 +1,8 @@
 export function StoreCompras(message) {
-    let storedCompras = JSON.parse(localStorage.getItem('Compras')) || [];
-  
-    storedCompras.push(message);
-  
-    localStorage.setItem('Compras', JSON.stringify(storedCompras));
-  }
+  let storedDadosMessages =
+    JSON.parse(localStorage.getItem("dadosMessages")) || [];
+
+  storedDadosMessages.push(...message);
+
+  localStorage.setItem("dadosMessages", JSON.stringify(storedDadosMessages));
+}
