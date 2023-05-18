@@ -17,17 +17,11 @@ function Coin(props) {
     return `${date.toLocaleDateString("pt-PT", options)}`;
   };
 
-  function notifyCoinInserted(value) {
-    toast.info(`Moeda de ${value.toFixed(2)} cêntimos inserida!`, {
-      autoClose: 1500,
-    });
-  }
-
   function handleInsertCoins(value) {
     const coinsData = JSON.parse(localStorage.getItem("coins"));
 
     switch (value) {
-      case 1:
+      case 1.0:
         coinsData.coinsQuantity100++;
         break;
       case 0.5:
@@ -51,13 +45,18 @@ function Coin(props) {
 
   function handleInsertCoin(value) {
     handleInsertCoins(value);
+    let coinType = "cêntimos";
+    if (value === 1.0) {
+      coinType = "euro";
+    }
     logAndStore(
       `Introduziu uma moeda de ${value.toFixed(
         2
-      )} cêntimos - ${getCurrentTime()}`
+      )} ${coinType} - ${getCurrentTime()}`
     );
-    notifyCoinInserted(value);
-    alert(`Moeda de ${value.toFixed(2)} cêntimos inserida!`);
+    toast.info(`Moeda de ${value.toFixed(2)}  ${coinType} inserida`, {
+      autoClose: 1500,
+    });
   }
 
   return (

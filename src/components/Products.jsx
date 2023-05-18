@@ -26,11 +26,6 @@ function Products(props) {
   const [insertedCoins, setInsertedCoins] = useState(0);
 
   function handleSelectProduct(product) {
-    if (product.quantity <= 0) {
-      alert("Este produto está esgotado. Por favor, selecione outro produto.");
-      return;
-    }
-
     props.setSelectedProduct(product);
     setInsertedCoins((prev) => prev - product.price);
     logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
@@ -51,16 +46,18 @@ function Products(props) {
           {product.quantity > 0 && (
             <>
               {props.insertedCoins >= product.price ? (
-                <button className="Selecionar" onClick={() => {
-                  handleSelectProduct(product);
-                  handleScrollToBottom();
-                }}>
+                <button
+                  className="Selecionar"
+                  onClick={() => {
+                    handleSelectProduct(product);
+                    handleScrollToBottom();
+                  }}
+                >
                   <span className="Selecionar_lg">
                     <span className="Selecionar_sl"></span>
                     <span className="Selecionar_text">Selecionar</span>
                   </span>
                 </button>
-                
               ) : (
                 <span style={{ color: "red", marginLeft: "40px" }}>
                   Insira moedas suficientes

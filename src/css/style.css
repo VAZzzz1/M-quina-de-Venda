@@ -42,10 +42,10 @@ h2.quantidade {
   color: white;
 }
 
-h2.ps, h2.vi
-{
+h2.ps,
+h2.vi {
   position: relative;
-  top: 200px;
+  top: 150px;
   color: white;
 }
 
@@ -77,8 +77,7 @@ h2.moedeiro {
   font-size: 2em;
 }
 
-h2.Atividade
-{
+h2.Atividade {
   color: white;
   position: relative;
   top: 55px;
@@ -113,20 +112,20 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
   left: 55px;
 }
 
 .Selecionar::before,
 .Selecionar::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .Selecionar::before {
@@ -169,7 +168,7 @@ li {
 }
 
 .Selecionar_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -180,7 +179,7 @@ li {
 }
 
 .Selecionar_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -188,7 +187,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .Selecionar_sl {
@@ -200,7 +199,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .Selecionar_text {
@@ -254,9 +253,9 @@ li {
 }
 
 .product-image-container img {
-  width: 20%; 
+  width: 20%;
   position: relative;
-  top: 200px;
+  top: 150px;
 }
 
 .coin10 {
@@ -273,21 +272,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
   left: 55px;
   bottom: 50px;
 }
 
 .coin10::before,
 .coin10::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .coin10::before {
@@ -330,7 +329,7 @@ li {
 }
 
 .coin10_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -341,7 +340,7 @@ li {
 }
 
 .coin10_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -349,7 +348,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin10_sl {
@@ -361,7 +360,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin10_text {
@@ -394,21 +393,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
   left: 95px;
   bottom: 50px;
 }
 
 .coin20::before,
 .coin20::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .coin20::before {
@@ -451,7 +450,7 @@ li {
 }
 
 .coin20_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -462,7 +461,7 @@ li {
 }
 
 .coin20_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -470,7 +469,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin20_sl {
@@ -482,7 +481,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin20_text {
@@ -515,21 +514,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;
-  left: 115px;
+  transition: all 0.15s ease;
+  left: 95px;
   bottom: 50px;
 }
 
 .coin100::before,
 .coin100::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .coin100::before {
@@ -564,7 +563,7 @@ li {
 .coin100_lg {
   position: relative;
   display: block;
-  padding: 10px 20px;
+  padding: 10px 40px;
   color: #fff;
   background-color: transparent;
   overflow: hidden;
@@ -572,7 +571,7 @@ li {
 }
 
 .coin100_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -583,7 +582,7 @@ li {
 }
 
 .coin100_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -591,7 +590,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin100_sl {
@@ -603,7 +602,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin100_text {
@@ -636,21 +635,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;  
-  left: 240px;
+  transition: all 0.15s ease;
+  left: 200px;
   bottom: -50px;
 }
 
 .Grafico::before,
 .Grafico::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .Grafico::before {
@@ -685,7 +684,7 @@ li {
 .Grafico_lg {
   position: relative;
   display: block;
-  padding: 10px 20px;
+  padding: 10px 62px;
   color: #fff;
   background-color: transparent;
   overflow: hidden;
@@ -693,7 +692,7 @@ li {
 }
 
 .Grafico_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -704,7 +703,7 @@ li {
 }
 
 .Grafico_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -712,7 +711,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .Grafico_sl {
@@ -724,7 +723,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .Grafico_text {
@@ -757,21 +756,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;  
+  transition: all 0.15s ease;
   left: 200px;
   bottom: -52px;
 }
 
 .Historico::before,
 .Historico::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .Historico::before {
@@ -814,7 +813,7 @@ li {
 }
 
 .historico_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -825,7 +824,7 @@ li {
 }
 
 .historico_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -833,7 +832,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .historico_sl {
@@ -845,7 +844,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .historico_text {
@@ -878,21 +877,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
   left: 55px;
   bottom: 50px;
 }
 
 .coin50::before,
 .coin50::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .coin50::before {
@@ -935,7 +934,7 @@ li {
 }
 
 .coin50_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -946,7 +945,7 @@ li {
 }
 
 .coin50_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -954,7 +953,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin50_sl {
@@ -966,7 +965,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .coin50_text {
@@ -999,21 +998,21 @@ li {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 14px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
   left: 270px;
-  bottom: -180px;
+  bottom: -120px;
 }
 
 .Comprar::before,
 .Comprar::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
   left: 0;
   height: calc(50% - 5px);
-  border: 1px solid #7D8082;
-  transition: all .15s ease;
+  border: 1px solid #7d8082;
+  transition: all 0.15s ease;
 }
 
 .Comprar::before {
@@ -1056,7 +1055,7 @@ li {
 }
 
 .Comprar_lg::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -1067,7 +1066,7 @@ li {
 }
 
 .Comprar_lg::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   right: 0;
@@ -1075,7 +1074,7 @@ li {
   width: 4px;
   height: 4px;
   background-color: #0f1923;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .Comprar_sl {
@@ -1087,7 +1086,7 @@ li {
   width: 0;
   background-color: #0088cc;
   transform: skew(-15deg);
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .Comprar_text {
@@ -1220,26 +1219,85 @@ nav {
   border-bottom: 2px solid #0088cc; /* Adiciona um sublinhado na cor desejada */
 }
 
-.loader-container {
+#fullscreen-loader {
+  --background: rgba(0, 0, 0, 0.905);
+  --front-color: #0088cc;
+  --back-color: #c3c8de;
+  --text-color: #414856;
   position: fixed;
-  z-index: 9999;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--background);
+  z-index: 9999;
 }
 
-.loader {
-  border: 16px solid #f3f3f3;
-  border-top: 16px solid #0088cc;
-  border-radius: 50%;
-  width: 120px;
+#fullscreen-loader svg {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#fullscreen-loader svg circle {
+  position: absolute;
+  fill: none;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(-100deg);
+  transform-origin: center;
+}
+
+#fullscreen-loader svg circle.back {
+  stroke: var(--back-color);
+}
+
+#fullscreen-loader svg circle.front {
+  stroke: var(--front-color);
+}
+
+#fullscreen-loader svg.circle-outer {
   height: 120px;
-  animation: spin 2s linear infinite;
+  width: 120px;
+}
+
+#fullscreen-loader svg.circle-outer circle {
+  stroke-dasharray: 62.75 188.25;
+}
+
+#fullscreen-loader svg.circle-outer circle.back {
+  animation: circle-outer135 1.8s ease infinite 0.3s;
+}
+
+#fullscreen-loader svg.circle-outer circle.front {
+  animation: circle-outer135 1.8s ease infinite 0.15s;
+}
+
+@keyframes circle-outer135 {
+  0% {
+    stroke-dashoffset: 25;
+  }
+
+  25% {
+    stroke-dashoffset: 0;
+  }
+
+  65% {
+    stroke-dashoffset: 301;
+  }
+
+  80% {
+    stroke-dashoffset: 276;
+  }
+
+  100% {
+    stroke-dashoffset: 276;
+  }
 }
 
 .fecha-button {
@@ -1292,8 +1350,7 @@ h2.prod {
   color: white;
 }
 
-.history
-{
+.history {
   position: relative;
 }
 

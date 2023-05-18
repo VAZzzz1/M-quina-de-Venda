@@ -11,9 +11,9 @@ const Navbar = () => {
       setIsLoading(false);
       setTimeout(() => {
         window.location.reload();
-      });
+      }, 500); // Ajuste o tempo de acordo com a duração da animação do loader
     }, 2000);
-  };  
+  };
 
   return (
     <nav>
@@ -29,8 +29,12 @@ const Navbar = () => {
         </li>
       </ul>
       {isLoading && (
-        <div className="loader-container">
-          <div className="loader"></div>
+        <div id="fullscreen-loader">
+          <svg className="circle-outer" viewBox="0 0 86 86">
+            <circle className="back" cx="43" cy="43" r="40"></circle>
+            <circle className="front" cx="43" cy="43" r="40"></circle>
+          </svg>
+          <div className="text" data-text="Searching"></div>
         </div>
       )}
     </nav>
