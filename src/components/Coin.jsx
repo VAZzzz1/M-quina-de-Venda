@@ -28,7 +28,7 @@ function Coin(props) {
 
     switch (value) {
       case 1:
-        coinsData.coinsQuantity100++
+        coinsData.coinsQuantity100++;
         break;
       case 0.5:
         coinsData.coinsQuantity50++;
@@ -57,21 +57,34 @@ function Coin(props) {
       )} cêntimos - ${getCurrentTime()}`
     );
     notifyCoinInserted(value);
+    alert(`Moeda de ${value.toFixed(2)} cêntimos inserida!`);
   }
 
   return (
     <ul>
-      <button className="coin10-button" onClick={() => handleInsertCoin(0.1)}>
-        Inserir moeda de 10 cêntimos
+      <button className="coin10" onClick={() => handleInsertCoin(0.1)}>
+        <span className="coin10_lg">
+          <span className="coin10_sl"></span>
+          <span className="coin10_text">Inserir moeda de 10 cêntimos</span>
+        </span>
       </button>
-      <button className="coin-button" onClick={() => handleInsertCoin(0.2)}>
-        Inserir moeda de 20 cêntimos
+      <button className="coin20" onClick={() => handleInsertCoin(0.2)}>
+        <span className="coin20_lg">
+          <span className="coin20_sl"></span>
+          <span className="coin20_text">Inserir moeda de 20 cêntimos</span>
+        </span>
       </button>
-      <button className="coin50-button" onClick={() => handleInsertCoin(0.5)}>
-        Inserir moeda de 50 cêntimos
+      <button className="coin50" onClick={() => handleInsertCoin(0.5)}>
+        <span className="coin50_lg">
+          <span className="coin50_sl"></span>
+          <span className="coin50_text">Inserir moeda de 50 cêntimos</span>
+        </span>
       </button>
-      <button className="coin100-button" onClick={() => handleInsertCoin(1)}>
-        Inserir moeda de 1 euro
+      <button className="coin100" onClick={() => handleInsertCoin(1)}>
+        <span className="coin100_lg">
+          <span className="coin100_sl"></span>
+          <span className="coin100_text">Inserir moeda de 1 euro</span>
+        </span>
       </button>
     </ul>
   );

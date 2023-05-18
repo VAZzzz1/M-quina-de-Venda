@@ -13,9 +13,7 @@ const GraphModal = () => {
       {
         label: "Dinheiro Ganho",
         data: [],
-        backgroundColor: [
-          "#ffffff",
-        ],
+        backgroundColor: ["#ffffff"],
         borderColor: "white",
         borderWidth: 2,
       },
@@ -33,9 +31,7 @@ const GraphModal = () => {
         {
           label: "Dinheiro Ganho",
           data: storedDadosMessages.map((data) => data.price),
-          backgroundColor: [
-            "#ffffff",
-          ],
+          backgroundColor: ["#ffffff"],
           pointBackgroundColor: "black",
           pointBorderColor: "white",
           borderColor: "white",
@@ -48,12 +44,16 @@ const GraphModal = () => {
 
   return (
     <>
-      <button className="graph-button"
+      <button
+        className="Grafico"
         onClick={() => {
           setShowModal(true), getLogMessages();
         }}
       >
-        Ver Gráfico das Compras
+        <span className="Grafico_lg">
+          <span className="Grafico_sl"></span>
+          <span className="Grafico_text">Gráfico das compras</span>
+        </span>
       </button>
       {showModal && (
         <div>

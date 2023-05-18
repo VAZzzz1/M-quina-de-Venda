@@ -27,7 +27,7 @@ function VendingMachine() {
     { name: "Coca-Cola", price: 1.2, quantity: 1, img: "../img/coca-cola.png" },
     { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
     { name: "USMug Beer", price: 7.0, quantity: 8, img: "../img/mugbeer.png" },
-    { name: "Canada Dryy", price: 1.6, quantity: 6, img: "../img/canadadry.png" },
+    { name: "Canada Dry", price: 1.6, quantity: 6, img: "../img/canadadry.png" },
     { name: "Soda-Crush", price: 6.0, quantity: 7, img: "../img/crush.png" },
     { name: "Dr. Pepper", price: 1.75, quantity: 10, img: "../img/drpepper.png" },
     { name: "Soda-Fanta", price: 0.75, quantity: 9, img: "../img/fanta.png" },
@@ -187,8 +187,11 @@ function VendingMachine() {
   };
 
   return (
+    
     <div className="body">
     <div className="vending-machine">
+      <Log />
+      <GraphModal/>         
       <h2 className="total">Valor total: € {coins.toFixed(2)}</h2>
       <h2 className="quantidade">Quantidade de Moedas:</h2>
       <h2 className="quant">Moedas de 20 Cent: {coinsQuantity20}</h2>
@@ -227,7 +230,7 @@ function VendingMachine() {
             {selectedProduct.name === "USMug Beer" && (
               <img src="../img/mugbeer.png" alt="Mug Beer" />
             )}
-            {selectedProduct.name === "Canada Dryy" && (
+            {selectedProduct.name === "Canada Dry" && (
               <img src="../img/canadadry.png" alt="Canada Dry" />
             )}
             {selectedProduct.name === "Soda-Crush" && (
@@ -254,13 +257,13 @@ function VendingMachine() {
             {selectedProduct.name === "SodaSumol" && (
               <img src="../img/sumol.png" alt="Sumol" />
             )}
-          </div>
-          
-          <button className="purchase-button" onClick={handlePurchase}>
-            Comprar Bebida
-          </button>
-          <GraphModal/>
-          <Log />
+          </div>          
+          <button className="Comprar" onClick={handlePurchase}>
+          <span className="Comprar_lg">
+            <span className="Comprar_sl"></span>
+            <span className="Comprar_text">Comprar Bebida</span>
+          </span>
+          </button>    
           <ToastContainer />
         </div>
       )}

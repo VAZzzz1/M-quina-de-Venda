@@ -51,14 +51,16 @@ function Products(props) {
           {product.quantity > 0 && (
             <>
               {props.insertedCoins >= product.price ? (
-                <button
-                  onClick={() => {
-                    handleSelectProduct(product);
-                    handleScrollToBottom();
-                  }}
-                >
-                  Selecionar
+                <button className="Selecionar" onClick={() => {
+                  handleSelectProduct(product);
+                  handleScrollToBottom();
+                }}>
+                  <span className="Selecionar_lg">
+                    <span className="Selecionar_sl"></span>
+                    <span className="Selecionar_text">Selecionar</span>
+                  </span>
                 </button>
+                
               ) : (
                 <span style={{ color: "red", marginLeft: "40px" }}>
                   Insira moedas suficientes

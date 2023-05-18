@@ -9,6 +9,7 @@ const App = () => {
     <div>
       <Navbar />
       <h2 className="moedeiro">Conteúdo do Moedeiro</h2>
+      <h2 className="Atividade">Estatísticas da Máquina de Vendas</h2>
       <VendingMachine />
       <Footer />
     </div>

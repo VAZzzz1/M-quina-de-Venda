@@ -16,17 +16,25 @@ const Log = () => {
     <div className="history">
       <div className="log">
         <button
-        className="log-button"
+          className="Historico"
           onClick={() => {
             setShowModal(true), getLogMessages();
           }}
         >
-          Ver Histórico da máquina de vendas
+          <span className="historico_lg">
+            <span className="historico_sl"></span>
+            <span className="historico_text"> Histórico da máquina de vendas</span>
+          </span>
         </button>
         {showModal ? (
           <Modal>
             <div className="buttons">
-              <button className="fecha-button" onClick={() => setShowModal(false)}>X</button>
+              <button
+                className="fecha-button"
+                onClick={() => setShowModal(false)}
+              >
+                X
+              </button>
             </div>
             <div className="historico">
               <h2>Histórico:</h2>

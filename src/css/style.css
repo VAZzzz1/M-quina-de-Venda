@@ -22,16 +22,23 @@ h3 {
 }
 
 h2.total {
-  font-size: 1.8em;
+  font-size: 1.6em;
   position: relative;
-  top: 25px;
+  top: 85px;
   color: white;
 }
 
 h2.quant {
-  font-size: 1.5em;
+  font-size: 1.6em;
   position: relative;
-  top: 20px;
+  top: 80px;
+  color: white;
+}
+
+h2.quantidade {
+  font-size: 2em;
+  position: relative;
+  top: 80px;
   color: white;
 }
 
@@ -64,7 +71,17 @@ h1 {
 h2.moedeiro {
   color: white;
   position: relative;
-  top: 145px;
+  top: 325px;
+  z-index: 2;
+  text-align: center;
+  font-size: 2em;
+}
+
+h2.Atividade
+{
+  color: white;
+  position: relative;
+  top: 55px;
   z-index: 2;
   text-align: center;
   font-size: 2em;
@@ -82,80 +99,124 @@ li {
   margin: 1.5em 0;
 }
 
-button.moedas {
-  --color: white;
-  padding: 0.8em 1.7em;
-  background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
-  overflow: hidden;
+.Selecionar {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
   cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
   position: relative;
-  left: 80px;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  left: 55px;
 }
 
-button {
-  --color: white;
-  padding: 0.8em 1.7em;
-  background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-}
-
-button::before,
-button::after {
-  content: "";
+.Selecionar::before,
+.Selecionar::after {
+  content: '';
   display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
   position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
 }
 
-button::before {
-  top: -1em;
-  left: -1em;
+.Selecionar::before {
+  top: 0;
+  border-bottom-width: 0;
 }
 
-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
+.Selecionar::after {
+  bottom: 0;
+  border-top-width: 0;
 }
 
-button:hover::before,
-button:hover::after {
-  height: 410px;
-  width: 410px;
+.Selecionar:active,
+.Selecionar:focus {
+  outline: none;
 }
 
-button:hover {
-  color: rgb(10, 25, 30);
+.Selecionar:active::before,
+.Selecionar:active::after {
+  right: 3px;
+  left: 3px;
 }
 
-button:active {
-  filter: brightness(0.8);
+.Selecionar:active::before {
+  top: 3px;
+}
+
+.Selecionar:active::after {
+  bottom: 3px;
+}
+
+.Selecionar_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: transparent;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.Selecionar_lg::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.Selecionar_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
+}
+
+.Selecionar_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.Selecionar_text {
+  position: relative;
+}
+
+.Selecionar:hover {
+  color: #0f1923;
+}
+
+.Selecionar:hover .Selecionar_sl {
+  width: calc(100% + 15px);
+}
+
+.Selecionar:hover .Selecionar_lg::after {
+  background-color: #fff;
 }
 
 .body {
@@ -171,9 +232,9 @@ button:active {
   padding: 35px;
   width: 800px;
   position: relative;
-  top: 70px;
+  top: -30px;
   margin-bottom: 150px;
-  height: 4980px;
+  height: 5200px;
 }
 
 .product-list {
@@ -198,355 +259,851 @@ button:active {
   top: 200px;
 }
 
-.coin-button {
-  --color: white;
-  padding: 0.8em 1.7em;
-  background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
-  overflow: hidden;
+.coin10 {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
   cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  left: 70px;
-  top: -95px;
-}
-
-.coin-button::before,
-.coin-button::after {
-  content: "";
-  display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
-}
-
-.coin-button::before {
-  top: -1em;
-  left: -1em;
-}
-
-.coin-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
-}
-
-.coin-button:hover::before,
-.coin-button:hover::after {
-  height: 410px;
-  width: 410px;
-}
-
-.coin-button:hover {
-  color: rgb(10, 25, 30);
-}
-
-.coin-button:active {
-  filter: brightness(0.8);
-}
-
-.coin10-button {
-  --color: white;
-  padding: 0.8em 1.7em;
-  background-color: transparent;
-  border-radius: 0.3em;
   position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
+  padding: 8px;
+  margin-bottom: 20px;
   text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  left: 40px;
-  top: -95px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  left: 55px;
+  bottom: 50px;
 }
 
-.coin10-button::before,
-.coin10-button::after {
-  content: "";
+.coin10::before,
+.coin10::after {
+  content: '';
   display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
   position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
 }
 
-.coin10-button::before {
-  top: -1em;
-  left: -1em;
+.coin10::before {
+  top: 0;
+  border-bottom-width: 0;
 }
 
-.coin10-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
+.coin10::after {
+  bottom: 0;
+  border-top-width: 0;
 }
 
-.coin10-button:hover::before,
-.coin10-button:hover::after {
-  height: 410px;
-  width: 410px;
+.coin10:active,
+.coin10:focus {
+  outline: none;
 }
 
-.coin10-button:hover {
-  color: rgb(10, 25, 30);
+.coin10:active::before,
+.coin10:active::after {
+  right: 3px;
+  left: 3px;
 }
 
-.coin10-button:active {
-  filter: brightness(0.8);
+.coin10:active::before {
+  top: 3px;
 }
 
-.coin100-button {
-  --color: white;
-  padding: 0.8em 1.7em;
-  background-color: transparent;
-  border-radius: 0.3em;
+.coin10:active::after {
+  bottom: 3px;
+}
+
+.coin10_lg {
   position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  left: 70px;
-  top: -55px;
-  width: 43.5%;
-}
-
-.coin100-button::before,
-.coin100-button::after {
-  content: "";
   display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
-}
-
-.coin100-button::before {
-  top: -1em;
-  left: -1em;
-}
-
-.coin100-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
-}
-
-.coin100-button:hover::before,
-.coin100-button:hover::after {
-  height: 410px;
-  width: 410px;
-}
-
-.coin100-button:hover {
-  color: rgb(10, 25, 30);
-}
-
-.coin100-button:active {
-  filter: brightness(0.8);
-}
-
-.coin50-button {
-  --color: white;
-  padding: 0.8em 1.7em;
+  padding: 10px 20px;
+  color: #fff;
   background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
   overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  left: 40px;
-  top: -55px;
+  box-shadow: inset 0px 0px 0px 1px transparent;
 }
 
-.coin50-button::before,
-.coin50-button::after {
-  content: "";
+.coin10_lg::before {
+  content: '';
   display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
   position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
 }
 
-.coin50-button::before {
-  top: -1em;
-  left: -1em;
+.coin10_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
 }
 
-.coin50-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
+.coin10_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
 }
 
-.coin50-button:hover::before,
-.coin50-button:hover::after {
-  height: 410px;
-  width: 410px;
+.coin10_text {
+  position: relative;
 }
 
-.coin50-button:hover {
-  color: rgb(10, 25, 30);
+.coin10:hover {
+  color: #0f1923;
 }
 
-.coin50-button:active {
-  filter: brightness(0.8);
+.coin10:hover .coin10_sl {
+  width: calc(100% + 15px);
 }
 
-.purchase-button {
-  --color: white;
-  padding: 0.8em 16.1em;
+.coin10:hover .coin10_lg::after {
+  background-color: #fff;
+}
+
+.coin20 {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  left: 95px;
+  bottom: 50px;
+}
+
+.coin20::before,
+.coin20::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.coin20::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.coin20::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.coin20:active,
+.coin20:focus {
+  outline: none;
+}
+
+.coin20:active::before,
+.coin20:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.coin20:active::before {
+  top: 3px;
+}
+
+.coin20:active::after {
+  bottom: 3px;
+}
+
+.coin20_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
   background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
   overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  width: 100%;
-  left: 10px;
-  top: 170px;
+  box-shadow: inset 0px 0px 0px 1px transparent;
 }
 
-.purchase-button::before,
-.purchase-button::after {
-  content: "";
+.coin20_lg::before {
+  content: '';
   display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
   position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
 }
 
-.purchase-button::before {
-  top: -1em;
-  left: -1em;
+.coin20_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
 }
 
-.purchase-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
+.coin20_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
 }
 
-.purchase-button:hover::before,
-.purchase-button:hover::after {
-  height: 410px;
-  width: 810px;
+.coin20_text {
+  position: relative;
 }
 
-.purchase-button:hover {
-  color: rgb(10, 25, 30);
+.coin20:hover {
+  color: #0f1923;
 }
 
-.purchase-button:active {
-  filter: brightness(0.8);
+.coin20:hover .coin20_sl {
+  width: calc(100% + 15px);
 }
 
-.graph-button {
-  --color: white;
-  padding: 0.8em 13.7em;
+.coin20:hover .coin20_lg::after {
+  background-color: #fff;
+}
+
+.coin100 {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  left: 115px;
+  bottom: 50px;
+}
+
+.coin100::before,
+.coin100::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.coin100::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.coin100::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.coin100:active,
+.coin100:focus {
+  outline: none;
+}
+
+.coin100:active::before,
+.coin100:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.coin100:active::before {
+  top: 3px;
+}
+
+.coin100:active::after {
+  bottom: 3px;
+}
+
+.coin100_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
   background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
   overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  width: 100%;
-  left: 10px;
-  top: 195px;
+  box-shadow: inset 0px 0px 0px 1px transparent;
 }
 
-.graph-button::before,
-.graph-button::after {
-  content: "";
+.coin100_lg::before {
+  content: '';
   display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
   position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
 }
 
-.graph-button::before {
-  top: -1em;
-  left: -1em;
+.coin100_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
 }
 
-.graph-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
+.coin100_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
 }
 
-.graph-button:hover::before,
-.graph-button:hover::after {
-  height: 410px;
-  width: 810px;
+.coin100_text {
+  position: relative;
 }
 
-.graph-button:hover {
-  color: rgb(10, 25, 30);
+.coin100:hover {
+  color: #0f1923;
 }
 
-.graph-button:active {
-  filter: brightness(0.8);
+.coin100:hover .coin100_sl {
+  width: calc(100% + 15px);
+}
+
+.coin100:hover .coin100_lg::after {
+  background-color: #fff;
+}
+
+.Grafico {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;  
+  left: 240px;
+  bottom: -50px;
+}
+
+.Grafico::before,
+.Grafico::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.Grafico::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.Grafico::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.Grafico:active,
+.Grafico:focus {
+  outline: none;
+}
+
+.Grafico:active::before,
+.Grafico:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.Grafico:active::before {
+  top: 3px;
+}
+
+.Grafico:active::after {
+  bottom: 3px;
+}
+
+.Grafico_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: transparent;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.Grafico_lg::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.Grafico_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
+}
+
+.Grafico_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.Grafico_text {
+  position: relative;
+}
+
+.Grafico:hover {
+  color: #0f1923;
+}
+
+.Grafico:hover .Grafico_sl {
+  width: calc(100% + 15px);
+}
+
+.Grafico:hover .Grafico_lg::after {
+  background-color: #fff;
+}
+
+.Historico {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;  
+  left: 200px;
+  bottom: -52px;
+}
+
+.Historico::before,
+.Historico::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.Historico::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.Historico::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.Historico:active,
+.Historico:focus {
+  outline: none;
+}
+
+.Historico:active::before,
+.Historico:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.Historico:active::before {
+  top: 3px;
+}
+
+.Historico:active::after {
+  bottom: 3px;
+}
+
+.historico_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: transparent;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.historico_lg::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.historico_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
+}
+
+.historico_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.historico_text {
+  position: relative;
+}
+
+.Historico:hover {
+  color: #0f1923;
+}
+
+.Historico:hover .historico_sl {
+  width: calc(100% + 15px);
+}
+
+.Historico:hover .historico_lg::after {
+  background-color: #fff;
+}
+
+.coin50 {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  left: 55px;
+  bottom: 50px;
+}
+
+.coin50::before,
+.coin50::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.coin50::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.coin50::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.coin50:active,
+.coin50:focus {
+  outline: none;
+}
+
+.coin50:active::before,
+.coin50:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.coin50:active::before {
+  top: 3px;
+}
+
+.coin50:active::after {
+  bottom: 3px;
+}
+
+.coin50_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: transparent;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.coin50_lg::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.coin50_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
+}
+
+.coin50_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.coin50_text {
+  position: relative;
+}
+
+.coin50:hover {
+  color: #0f1923;
+}
+
+.coin50:hover .coin50_sl {
+  width: calc(100% + 15px);
+}
+
+.coin50:hover .coin50_lg::after {
+  background-color: #fff;
+}
+
+.Comprar {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  left: 270px;
+  bottom: -180px;
+}
+
+.Comprar::before,
+.Comprar::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.Comprar::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.Comprar::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.Comprar:active,
+.Comprar:focus {
+  outline: none;
+}
+
+.Comprar:active::before,
+.Comprar:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.Comprar:active::before {
+  top: 3px;
+}
+
+.Comprar:active::after {
+  bottom: 3px;
+}
+
+.Comprar_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: transparent;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.Comprar_lg::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.Comprar_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
+}
+
+.Comprar_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #0088cc;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.Comprar_text {
+  position: relative;
+}
+
+.Comprar:hover {
+  color: #0f1923;
+}
+
+.Comprar:hover .Comprar_sl {
+  width: calc(100% + 15px);
+}
+
+.Comprar:hover .Comprar_lg::after {
+  background-color: #fff;
 }
 
 img {
@@ -685,75 +1242,6 @@ nav {
   animation: spin 2s linear infinite;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
-.log-button {
-  --color: white;
-  padding: 0.8em 2.7em; /* aumenta o padding para 2.7em */
-  background-color: transparent;
-  border-radius: 0.3em;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.5s;
-  font-weight: 400;
-  font-size: 17px;
-  border: 1px solid;
-  font-family: inherit;
-  text-transform: uppercase;
-  color: var(--color);
-  z-index: 1;
-  width: 100%;
-  left: 10px;
-  top: 220px;
-}
-
-.log-button::before,
-.log-button::after {
-  content: "";
-  display: block;
-  width: 50px;
-  height: 50px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  border-radius: 50%;
-  z-index: -1;
-  background-color: var(--color);
-  transition: 1s ease;
-}
-
-.log-button::before {
-  top: -1em;
-  left: -1em;
-}
-
-.log-button::after {
-  left: calc(100% + 1em);
-  top: calc(100% + 1em);
-}
-
-.log-button:hover::before,
-.log-button:hover::after {
-  height: 410px;
-  width: 810px;
-}
-
-.log-button:hover {
-  color: rgb(10, 25, 30);
-}
-
-.log-button:active {
-  filter: brightness(0.8);
-}
-
 .fecha-button {
   --color: transparent;
   padding: 0.8em 2.7em; /* aumenta o padding para 2.7em */
@@ -802,6 +1290,11 @@ h2.prod {
   position: relative;
   top: 120px;
   color: white;
+}
+
+.history
+{
+  position: relative;
 }
 
 #modal {
