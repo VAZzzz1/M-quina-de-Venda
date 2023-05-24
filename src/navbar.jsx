@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
+import "../src/css/nf.css";
 
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +20,8 @@ const Navbar = () => {
     <nav>
       <div className="navbar-logo">
         <img className="logo" src="../img/vending-machine.png" alt="Logo" />
-        <h1>Afonso Vaz - VendingMachine</h1>
       </div>
+      <h1>Afonso Vaz - VendingMachine</h1>
       <ul className="navbar-links">
         <li>
           <a href="#" onClick={handleHomeClick}>

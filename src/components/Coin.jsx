@@ -1,10 +1,7 @@
-import React from "react";
-import "../css/style.css";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { logAndStore } from "./log";
 
-function Coin(props) {
+const Coin = ({ setTotalCoins, setCoinList }) => {
   const getCurrentTime = () => {
     const date = new Date();
     const options = {
@@ -17,76 +14,40 @@ function Coin(props) {
     return `${date.toLocaleDateString("pt-PT", options)}`;
   };
 
-  function handleInsertCoins(value) {
-    const coinsData = JSON.parse(localStorage.getItem("coins"));
+  const handleInsertCoins = (value) => {
+    setTotalCoins((prevTotalCoins) => prevTotalCoins + value);
+    setCoinList((prevCoinList) => [...prevCoinList, value]);
 
-    switch (value) {
-      case 1.0:
-        coinsData.coinsQuantity100++;
-        break;
-      case 0.5:
-        coinsData.coinsQuantity50++;
-        break;
-      case 0.2:
-        coinsData.coinsQuantity20++;
-        break;
-      case 0.1:
-        coinsData.coinsQuantity10++;
-        break;
-      default:
-        break;
+    if (value < 100) {
+      toast.info(`Introduziu uma moeda de ${value} cêntimos!`, {
+        autoClose: 1500,
+      });
+      logAndStore(
+        `Introduziu uma moeda de ${value} cêntimos - ${getCurrentTime()}`
+      );
+    } else {
+      toast.info(`Introduziu uma moeda de ${value / 100} €!`, {
+        autoClose: 1500,
+      });
+      logAndStore(
+        `Introduziu uma moeda de ${value / 100} € - ${getCurrentTime()}`
+      );
     }
-
-    coinsData.coins += value;
-    localStorage.setItem("coins", JSON.stringify(coinsData));
-
-    props.setInsertedCoins((prevCoins) => prevCoins + value);
-  }
-
-  function handleInsertCoin(value) {
-    handleInsertCoins(value);
-    let coinType = "cêntimos";
-    if (value === 1.0) {
-      coinType = "euro";
-    }
-    logAndStore(
-      `Introduziu uma moeda de ${value.toFixed(
-        2
-      )} ${coinType} - ${getCurrentTime()}`
-    );
-    toast.info(`Moeda de ${value.toFixed(2)}  ${coinType} inserida`, {
-      autoClose: 1500,
-    });
-  }
+  };
 
   return (
-    <ul>
-      <button className="coin10" onClick={() => handleInsertCoin(0.1)}>
-        <span className="coin10_lg">
-          <span className="coin10_sl"></span>
-          <span className="coin10_text">Inserir moeda de 10 cêntimos</span>
-        </span>
-      </button>
-      <button className="coin20" onClick={() => handleInsertCoin(0.2)}>
-        <span className="coin20_lg">
-          <span className="coin20_sl"></span>
-          <span className="coin20_text">Inserir moeda de 20 cêntimos</span>
-        </span>
-      </button>
-      <button className="coin50" onClick={() => handleInsertCoin(0.5)}>
-        <span className="coin50_lg">
-          <span className="coin50_sl"></span>
-          <span className="coin50_text">Inserir moeda de 50 cêntimos</span>
-        </span>
-      </button>
-      <button className="coin100" onClick={() => handleInsertCoin(1)}>
-        <span className="coin100_lg">
-          <span className="coin100_sl"></span>
-          <span className="coin100_text">Inserir moeda de 1 euro</span>
-        </span>
-      </button>
-    </ul>
+    <div className="coinvault">
+      <div className="title">
+        <h2>Introduza Moedas</h2>
+      </div>
+      <div className="moedas">
+        <button onClick={() => handleInsertCoins(20)}>{20} Cent</button>
+        <button onClick={() => handleInsertCoins(50)}>{50} Cent</button>
+        <button onClick={() => handleInsertCoins(100)}>{1} €</button>
+        <button onClick={() => handleInsertCoins(200)}>{2} €</button>
+      </div>
+    </div>
   );
-}
+};
 
 export default Coin;

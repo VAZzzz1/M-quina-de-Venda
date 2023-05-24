@@ -1,275 +1,44 @@
-import React, { useState, useEffect } from "react";
-import Products from "./Products";
-import Coin from "./Coin";
-import Log from "./Log.jsx";
 import "../css/style.css";
+import GraphModal from "./Grafico";
+import CoinsVault from "./CoinsVault";
+import { useState } from "react";
+import Coin from "./Coin.jsx";
+import Payment from "./Payment";
+import ProductsMachine from "./ProductsMachine";
+import Log from "./Log.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { logAndStore } from './log';
-import { StoreCompras } from "./Compras";
-import { StoreGanhos } from "./Ganhos";
-import GraphModal from "./Grafico";
 
-function VendingMachine() {
-  const defaultCoins = {
-    coins: 31,
-    coinsQuantity20: 50,
-    coinsQuantity10: 60,
-    coinsQuantity50: 30,
-    coinsQuantity100: 10,
-  }; 
-  const [coins, setCoins] = useState(defaultCoins.coins);
-  const [coinsQuantity20, setCoinsQuantity20] = useState(defaultCoins.coinsQuantity20);
-  const [coinsQuantity10, setCoinsQuantity10] = useState(defaultCoins.coinsQuantity10);
-  const [coinsQuantity50, setCoinsQuantity50] = useState(defaultCoins.coinsQuantity50);  
-  const [coinsQuantity100, setCoinsQuantity100] = useState(defaultCoins.coinsQuantity100);  
-  const defaultProducts = [
-    { name: "Coca-Cola", price: 1.2, quantity: 1, img: "../img/coca-cola.png" },
-    { name: "Soda-Sprite", price: 0.8, quantity: 5, img: "../img/sprite.png" },
-    { name: "USMug Beer", price: 7.0, quantity: 8, img: "../img/mugbeer.png" },
-    { name: "Canada Dry", price: 1.6, quantity: 6, img: "../img/canadadry.png" },
-    { name: "Soda-Crush", price: 6.0, quantity: 7, img: "../img/crush.png" },
-    { name: "Dr. Pepper", price: 1.75, quantity: 10, img: "../img/drpepper.png" },
-    { name: "Soda-Fanta", price: 0.75, quantity: 9, img: "../img/fanta.png" },
-    { name: "Br. Guarana", price: 1.5, quantity: 9, img: "../img/guarana.png" },
-    { name: "Mount Dew", price: 2.65, quantity: 5, img: "../img/mountaindew.png" },
-    { name: "SodaPepsi", price: 0.8, quantity: 10, img: "../img/pepsi.png" },
-    { name: "Seven Up", price: 0.8, quantity: 10, img: "../img/sevenup.png" },
-    { name: "SodaSumol", price: 0.63, quantity: 2, img: "../img/sumol.png" },
-  ]; 
-  
-  const [selectedProduct, setSelectedProduct] = useState(null); 
-  const [insertedCoins, setInsertedCoins] = useState(0); 
-  const [changeCoins, setChangeCoins] = useState(0); 
-
-  useEffect(() => {
-    const coinsData = JSON.parse(localStorage.getItem("coins"));
-    setCoins(coinsData.coins);
-    setCoinsQuantity20(coinsData.coinsQuantity20);
-    setCoinsQuantity10(coinsData.coinsQuantity10);
-    setCoinsQuantity50(coinsData.coinsQuantity50);
-    setCoinsQuantity100(coinsData.coinsQuantity100);
-  }, []);
-
-  const storedDadosMessages = localStorage.getItem("dadosMessages");
-
-  const dadosMessages = storedDadosMessages
-    ? JSON.parse(storedDadosMessages)
-    : null;
-
-  const updateDadosInLocalStorage = () => {
-    localStorage.setItem("dadosMessages", JSON.stringify(dadosMessages));
-  };
-
-  const compras = (price) => {
-    const now = new Date();
-    const day = now.getDate();
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
-
-    if (dadosMessages !== null) {
-      dadosMessages.forEach((dado) => {
-        if (dado.day === now.getDate()) {
-          dado.price += selectedProduct.price;
-          updateDadosInLocalStorage();
-          return;
-        } else {
-          StoreCompras([
-            {
-              day: day,
-              price: price,
-              month: month,
-              year: year,
-            },
-          ]);
-          return;
-        }
-      });
-    } else {
-      StoreCompras([
-        {
-          day: day,
-          price: price,
-          month: month,
-          year: year,
-        },
-      ]);
-    }
-  };
-
-  
-  const getCurrentTime = () => {
-    const date = new Date();
-    const options = {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric'
-    };
-    return `${date.toLocaleDateString('pt-PT', options)}`;
-  };  
-
-  if (!localStorage.getItem("coins")) {
-    localStorage.setItem("coins", JSON.stringify(defaultCoins));
-  }     
-
-  const coinsData = JSON.parse(localStorage.getItem("coins"));
-  
-  console.log(coinsData);
-  
-  function handlePurchase() {
-    if (
-      selectedProduct &&
-      insertedCoins + changeCoins >= selectedProduct.price &&
-      selectedProduct.quantity > 0
-    ) {
-      const change = insertedCoins + changeCoins - selectedProduct.price;
-      let num100Coins = Math.floor(change / 100);
-      let num50Coins = Math.floor(change / 50);
-      let num10Coins = Math.floor((change % 50) / 10);
-      let num20Coins = Math.floor(((change % 50) % 10) / 0.2); 
-      setCoins(
-        (prevCoins) => prevCoins + insertedCoins - selectedProduct.price
-      );
-      setCoinsQuantity100(
-        (prevCoinsQuantity100) => prevCoinsQuantity100 - num100Coins
-      );
-      setCoinsQuantity50(
-        (prevCoinsQuantity50) => prevCoinsQuantity50 - num50Coins
-      );
-      setCoinsQuantity10(
-        (prevCoinsQuantity10) => prevCoinsQuantity10 - num10Coins
-      );
-      setCoinsQuantity20(
-        (prevCoinsQuantity20) => prevCoinsQuantity20 - num20Coins
-      );
-
-      setCoins((prevCoins) => prevCoins + selectedProduct.price - change);
-
-      if (change > 0) {
-        logAndStore(`Recebeu ${change.toFixed(2).toString()} cêntimos de troco - ${getCurrentTime()}`);
-        alert(`Recebeu troco de € ${change.toFixed(2)}`, {
-          autoClose: 2000,
-        });
-      }
-      setChangeCoins(0);
-      setInsertedCoins(0);
-      setSelectedProduct(null);
-      alert(`${selectedProduct.name} comprada com sucesso! `);  
-      logAndStore(`${selectedProduct.name} comprada com sucesso! - ${getCurrentTime()}`);
-      products.forEach((product) => {
-        if (selectedProduct && selectedProduct.name === product.name) {
-          if (selectedProduct.quantity !== 0) {
-            product.quantity = selectedProduct.quantity - 1;
-            updateDrinksInLocalStorage();
-          }
-        }
-      });
-      compras(selectedProduct.price);
-      StoreGanhos([
-        {
-          Ganhos: selectedProduct.price,
-        }
-      ])
-      window.scrollTo(0, 0);
-    } else {
-      alert(`Valor Insuficiente para comprar a bebida: ${selectedProduct.name}.`);
-    }
-  }
-
-  const storedProducts = localStorage.getItem("products");
-  
-  const products = storedProducts ? JSON.parse(storedProducts) : defaultProducts;
-
-  const updateDrinksInLocalStorage = () => {
-    localStorage.setItem("products", JSON.stringify(products));
-  };
+const VendingMachine = () => {
+  const [totalCoins, setTotalCoins] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [coinList, setCoinList] = useState([]);
 
   return (
-    
-    <div className="body">
     <div className="vending-machine">
-      <Log />
-      <GraphModal/>         
-      <h2 className="total">Valor total: € {coins.toFixed(2)}</h2>
-      <h2 className="quantidade">Quantidade de Moedas:</h2>
-      <h2 className="quant">Moedas de 20 Cent: {coinsQuantity20}</h2>
-      <h2 className="quant">Moedas de 10 Cent: {coinsQuantity10}</h2>
-      <h2 className="quant">Moedas de 50 Cent: {coinsQuantity50}</h2>
-      <h2 className="quant">Moedas de 1 Euro: {coinsQuantity100}</h2>
-      <Coin
-            coinsQuantity100={coinsQuantity100}
-            coinsQuantity50={coinsQuantity50}
-            coinsQuantity20={coinsQuantity20}
-            coinsQuantity10={coinsQuantity10}
-            insertedCoins={insertedCoins}
-            setCoinsQuantity100={setCoinsQuantity100}
-            setCoinsQuantity50={setCoinsQuantity50}
-            setCoinsQuantity20={setCoinsQuantity20}
-            setCoinsQuantity10={setCoinsQuantity10}
-            setInsertedCoins={setInsertedCoins}
-          />
-      <h2 className="prod">Produtos disponíveis:</h2>
-      
-      <Products products={products} setSelectedProduct={setSelectedProduct} insertedCoins={insertedCoins} />
-      {selectedProduct && (
-        <div>
-          <h2 className="ps">
-            Produto selecionado: {selectedProduct.name} - €{" "}
-            {selectedProduct.price.toFixed(2)}
-          </h2>
-          <h2 className="vi">Valor inserido: € {insertedCoins.toFixed(2)}</h2>
-          <div className="product-image-container">
-            {selectedProduct.name === "Coca-Cola" && (
-              <img src="../img/coca-cola.png" alt="Coca-Cola" />
-            )}
-            {selectedProduct.name === "Soda-Sprite" && (
-              <img src="../img/sprite.png" alt="Sprite" />
-            )}
-            {selectedProduct.name === "USMug Beer" && (
-              <img src="../img/mugbeer.png" alt="Mug Beer" />
-            )}
-            {selectedProduct.name === "Canada Dry" && (
-              <img src="../img/canadadry.png" alt="Canada Dry" />
-            )}
-            {selectedProduct.name === "Soda-Crush" && (
-              <img src="../img/crush.png" alt="Crush" />
-            )}
-            {selectedProduct.name === "Dr. Pepper" && (
-              <img src="../img/drpepper.png" alt="Dr. Pepper" />
-            )}
-            {selectedProduct.name === "Soda-Fanta" && (
-              <img src="../img/fanta.png" alt="Fanta" />
-            )}
-            {selectedProduct.name === "Br. Guarana" && (
-              <img src="../img/guarana.png" alt="Guarana" />
-            )}
-            {selectedProduct.name === "Mount Dew" && (
-              <img src="../img/mountaindew.png" alt="Mountain Dew" />
-            )}
-            {selectedProduct.name === "SodaPepsi" && (
-              <img src="../img/pepsi.png" alt="Pepsi" />
-            )}
-            {selectedProduct.name === "Seven Up" && (
-              <img src="../img/sevenup.png" alt="SevenUp" />
-            )}
-            {selectedProduct.name === "SodaSumol" && (
-              <img src="../img/sumol.png" alt="Sumol" />
-            )}
-          </div>          
-          <button className="Comprar" onClick={handlePurchase}>
-          <span className="Comprar_lg">
-            <span className="Comprar_sl"></span>
-            <span className="Comprar_text">Comprar Bebida</span>
-          </span>
-          </button>    
-          <ToastContainer />
-        </div>
-      )}
-    </div>
+      <div className="left">
+        <ProductsMachine
+          setSelectedProduct={setSelectedProduct}
+          selectedProduct={selectedProduct}
+          totalCoins={totalCoins}
+        />
+      </div>
+      <div className="right">
+        <ToastContainer />
+        <Coin setTotalCoins={setTotalCoins} setCoinList={setCoinList} />
+        <Payment
+          total={totalCoins}
+          selectedProduct={selectedProduct}
+          setSelectedProduct={setSelectedProduct}
+          setTotalCoins={setTotalCoins}
+          coinList={coinList}
+        />
+        <CoinsVault />
+        <Log />
+        <GraphModal />
+      </div>
     </div>
   );
-}
+};
 
 export default VendingMachine;

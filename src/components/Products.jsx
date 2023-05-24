@@ -1,79 +1,94 @@
-import React, { useState } from "react";
-import "../css/style.css";
+import React from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { logAndStore } from "./log";
+import defaultProducts from "./defaultProducts";
 
-function Products(props) {
-  const getCurrentTime = () => {
-    const date = new Date();
-    const options = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    };
-    return `${date.toLocaleDateString("pt-PT", options)}`;
+const Product = ({ product, onClick, totalCoins }) => {
+  const storedProducts = localStorage.getItem("products");
+
+  const products = storedProducts
+    ? JSON.parse(storedProducts)
+    : defaultProducts;
+
+  if (!storedProducts) {
+    localStorage.setItem("products", JSON.stringify(defaultProducts));
+  }
+
+  useEffect(() => {
+    products.forEach((p) => {
+      const productElement = document.getElementById(p.name);
+      if (totalCoins / 100 >= p.price) {
+        productElement.style.backgroundColor = "#a8c5f74d";
+        productElement.style.borderRadius = "10px";
+        productElement.style.cursor = "pointer";
+      } else {
+        productElement.style.backgroundColor = "transparent";
+        productElement.style.cursor = "pointer";
+      }
+    });
+  }, [totalCoins]);
+
+  const handleSelectProduct = (product) => {
+    if (
+      document.getElementById(product.name).getAttribute("data-selected") ===
+      "true"
+    ) {
+      return;
+    }
+
+    if (totalCoins / 100 < product.price) {
+      toast.error(
+        `Insira dinheiro suficiente para comprar a bebida: ${product.name} !`,
+        { autoClose: 2000 }
+      );
+      document.getElementById(product.name).removeAttribute("data-selected");
+      return;
+    }
+
+    onClick(product);
+
+    toast.info(`Selecionou a bebida ${product.name}!`, { autoClose: 2000 });
+
+    if (totalCoins / 100 < product.price) {
+      document.getElementById(product.name).style.backgroundColor = "#51c94d";
+    } else {
+      document.getElementById(product.name).style.backgroundColor = "#51c94d";
+    }
+
+    products.forEach((p) => {
+      if (p.name !== product.name) {
+        if (totalCoins / 100 < p.price) {
+          document.getElementById(p.name).style.backgroundColor = "transparent";
+        } else {
+          document.getElementById(p.name).style.backgroundColor = "#afe498";
+        }
+        document.getElementById(p.name).removeAttribute("data-selected");
+      }
+    });
+    document.getElementById(product.name).setAttribute("data-selected", "true");
   };
 
-  function handleScrollToBottom() {
-    const bottomElement = document.querySelector("footer");
-    bottomElement.scrollIntoView({ behavior: "smooth" });
-  }
-
-  // eslint-disable-next-line no-unused-vars
-  const [insertedCoins, setInsertedCoins] = useState(0);
-
-  function handleSelectProduct(product) {
-    props.setSelectedProduct(product);
-    setInsertedCoins((prev) => prev - product.price);
-    logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
-    notifyProductSelected(product);
-  }
-
-  function notifyProductSelected(product) {
-    toast.success(`Produto ${product.name} selecionado!`, { autoClose: 1500 });
-  }
-
   return (
-    <ul>
-      {props.products.map((product) => (
-        <li key={product.name}>
-          <img src={product.img} alt={product.name} />
-          {product.name} - € {product.price.toFixed(2)} ({product.quantity}{" "}
-          disponíveis)
-          {product.quantity > 0 && (
-            <>
-              {props.insertedCoins >= product.price ? (
-                <button
-                  className="Selecionar"
-                  onClick={() => {
-                    handleSelectProduct(product);
-                    handleScrollToBottom();
-                  }}
-                >
-                  <span className="Selecionar_lg">
-                    <span className="Selecionar_sl"></span>
-                    <span className="Selecionar_text">Selecionar</span>
-                  </span>
-                </button>
-              ) : (
-                <span style={{ color: "red", marginLeft: "40px" }}>
-                  Insira moedas suficientes
-                </span>
-              )}
-            </>
-          )}
-          {product.quantity === 0 && (
-            <span style={{ color: "red", marginLeft: "40px" }}>
-              Este produto está esgotado
-            </span>
-          )}
-        </li>
-      ))}
-    </ul>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+    <div className="prodcontainer" id={product.name} onClick={() => handleSelectProduct(product)}>
+      <div className="name">
+        <h2>{product.name}</h2>
+      </div>
+      <div className="image">
+        <img src={product.image} alt={product.name} />
+      </div>
+      <div className="price">
+        <h3>{product.price.toFixed(2)} €</h3>
+      </div>
+      <div className="quantity">
+        {product.quantity === 0 ? (
+          <p style={{ color: "red" }}>Esgotado</p>
+        ) : (
+          <p>Quantidade: {product.quantity}</p>
+        )}
+      </div>
+    </div>
   );
-}
+};
 
-export default Products;
+export default Product;

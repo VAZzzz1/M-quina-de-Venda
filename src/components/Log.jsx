@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Modal from "./Modal";
-import "../css/style.css";
 
 const Log = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,15 +15,11 @@ const Log = () => {
     <div className="history">
       <div className="log">
         <button
-          className="Historico"
           onClick={() => {
             setShowModal(true), getLogMessages();
           }}
         >
-          <span className="historico_lg">
-            <span className="historico_sl"></span>
-            <span className="historico_text"> Histórico da máquina de vendas</span>
-          </span>
+          Histórico
         </button>
         {showModal ? (
           <Modal>

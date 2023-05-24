@@ -1,0 +1,158 @@
+footer {
+  background-color: #333;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  color: #fff;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+footer p {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  width: 10%;
+}
+
+.navbar-logo img.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.navbar-logo h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #3b82f6;
+}
+
+#fullscreen-loader {
+  --background: rgba(0, 0, 0, 0.748);
+  --front-color: #3b82f6;
+  --back-color: #c3c8de;
+  --text-color: #414856;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background);
+  z-index: 9999;
+}
+
+#fullscreen-loader svg {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#fullscreen-loader svg circle {
+  position: absolute;
+  fill: none;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(-100deg);
+  transform-origin: center;
+}
+
+#fullscreen-loader svg circle.back {
+  stroke: var(--back-color);
+}
+
+#fullscreen-loader svg circle.front {
+  stroke: var(--front-color);
+}
+
+#fullscreen-loader svg.circle-outer {
+  height: 120px;
+  width: 120px;
+}
+
+#fullscreen-loader svg.circle-outer circle {
+  stroke-dasharray: 62.75 188.25;
+}
+
+#fullscreen-loader svg.circle-outer circle.back {
+  animation: circle-outer135 1.8s ease infinite 0.3s;
+}
+
+#fullscreen-loader svg.circle-outer circle.front {
+  animation: circle-outer135 1.8s ease infinite 0.15s;
+}
+
+@keyframes circle-outer135 {
+  0% {
+    stroke-dashoffset: 25;
+  }
+
+  25% {
+    stroke-dashoffset: 0;
+  }
+
+  65% {
+    stroke-dashoffset: 301;
+  }
+
+  80% {
+    stroke-dashoffset: 276;
+  }
+
+  100% {
+    stroke-dashoffset: 276;
+  }
+}
+
+a {
+  color: #ffffff; /* Cor do texto do link */
+  text-decoration: none; /* Remove a sublinhado padrão */
+  border-bottom: 2px solid #ffffff; /* Adiciona uma linha de fundo sob o link */
+  padding-bottom: 3px; /* Adiciona espaço entre o texto do link e a linha de fundo */
+  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Adiciona uma transição suave ao mudar a cor do texto e da linha de fundo */
+}
+
+a:hover {
+  color: #3b82f6; /* Cor do texto do link ao passar o mouse */
+  border-color: #3b82f6; /* Cor da linha de fundo ao passar o mouse */
+}
