@@ -241,7 +241,7 @@ const Payment = ({
       console.log(`Selecione uma bebida!`);
     } else if (selectedProduct.quantity === 0) {
       logAndStore(
-        `Já não há mais ${selectedProduct.name} - ${getCurrentTime()}`
+        `A bebida: ${selectedProduct.name} está esgotada - ${getCurrentTime()}`
       );
       toast.error(`A bebida: ${selectedProduct.name} está esgotada!`, {
         autoClose: 3500,
