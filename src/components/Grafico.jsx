@@ -5,21 +5,92 @@ import "../css/style.css";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import _ from "lodash";
+import axios from "axios";
 
 const GraphModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const storedDadosDiaMessages =
-    JSON.parse(localStorage.getItem("dadosDiaMessages")) || [];
-  const storedDadosMesMessages =
-    JSON.parse(localStorage.getItem("dadosMesMessages")) || [];
+  const [storedDadosDiaMessages, setStoredDadosDiaMessages] = useState([]);
+  const [storedDadosMesMessages, setStoredDadosMesMessages] = useState([]);
+  const [storedDadosAnoMessages, setStoredDadosAnoMessages] = useState([]);
 
-  const storedDadosAnoMessages =
-    JSON.parse(localStorage.getItem("dadosAnoMessages")) || [];
+  const fetchStoredDadosDiaMessages = async () => {
+    try {
+      const response = await axios.get(
+        "https://localhost:7062/dadosDiaMessages/getdadosDiaMessages"
+      );
+      setStoredDadosDiaMessages(response.data || "");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchStoredDadosMesMessages = async () => {
+    try {
+      const response = await axios.get(
+        "https://localhost:7062/dadosMesMessages/getdadosMesMessages"
+      );
+      setStoredDadosMesMessages(response.data || "");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchStoredDadosAnoMessages = async () => {
+    try {
+      const response = await axios.get(
+        "https://localhost:7062/dadosAnoMessages/getdadosAnoMessages"
+      );
+      setStoredDadosAnoMessages(response.data || "");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const [chartDataByYear, setChartDataByYear] = useState({});
   const [chartDataByMonthAndYear, setChartDataByMonthAndYear] = useState({});
-  const [chartDataByDayAndMonthAndYear, setChartDataByDayAndMonthAndYear] =
-    useState({});
+  const [chartDataByDayAndMonthAndYear, setChartDataByDayAndMonthAndYear] = useState({});
   const [chartOptions, setChartOptions] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [chartOptionsDefault, setChartOptionsDefault] = useState({
+    plugins: {
+      legend: true,
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Tempo Indefinido",
+        },
+        ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 90,
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Lucro €",
+        },
+        min: 0,
+      },
+    },
+  });
+
+  const chartDataDefault = {
+    labels: "-",
+    datasets: [
+      {
+        label: "-",
+        data: "-",
+        backgroundColor: ["#ffffff"],
+        pointBackgroundColor: "black",
+        pointBorderColor: "white",
+        borderColor: "white",
+        borderWidth: 2,
+      },
+    ],
+  };
 
   const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -33,21 +104,17 @@ const GraphModal = () => {
   };
 
   const getYearChartData = () => {
-    let storedDadosAnoMessages =
-      JSON.parse(localStorage.getItem("dadosAnoMessages")) || [];
-
     const groupedData = _.groupBy(storedDadosAnoMessages, "year");
 
     const chartDataByYear = {};
 
-    // Itere sobre os grupos de dados e crie o formato esperado pelo gráfico para cada mês
     for (const year in groupedData) {
       const yearData = groupedData[year];
       const chartData = {
         labels: yearData.map((data) => data.month),
         datasets: [
           {
-            label: "Dinheiro Ganho €",
+            label: "Dinheiro Ganho",
             data: yearData.map((data) => data.price),
             backgroundColor: ["#ffffff"],
             pointBackgroundColor: "black",
@@ -64,9 +131,6 @@ const GraphModal = () => {
   };
 
   const getMonthChartData = () => {
-    const storedDadosMesMessages =
-      JSON.parse(localStorage.getItem("dadosMesMessages")) || [];
-
     const groupedDataByYear = _.groupBy(storedDadosMesMessages, "year");
     const groupedDataByMonthAndYear = _.mapValues(
       groupedDataByYear,
@@ -84,7 +148,7 @@ const GraphModal = () => {
           labels: monthData.map((data) => data.day),
           datasets: [
             {
-              label: "Dinheiro Ganho €",
+              label: "Dinheiro Ganho",
               data: monthData.map((data) => data.price),
               backgroundColor: ["#ffffff"],
               pointBackgroundColor: "black",
@@ -102,9 +166,6 @@ const GraphModal = () => {
   };
 
   const getDayChartData = () => {
-    const storedDadosDiaMessages =
-      JSON.parse(localStorage.getItem("dadosDiaMessages")) || [];
-
     const groupedDataByYear = _.groupBy(storedDadosDiaMessages, "year");
     const chartDataByDayAndMonthAndYear = {};
 
@@ -124,7 +185,7 @@ const GraphModal = () => {
             labels: [],
             datasets: [
               {
-                label: "Dinheiro Ganho €",
+                label: "Dinheiro Ganho",
                 data: [],
                 backgroundColor: ["#ffffff"],
                 pointBackgroundColor: "black",
@@ -170,7 +231,6 @@ const GraphModal = () => {
       const filteredMonths = Object.keys(monthChartData[selectedYear]);
       const mesesSelect = document.getElementById("meses");
 
-      // Remova as opções existentes no campo de seleção de meses
       while (mesesSelect.options.length > 0) {
         mesesSelect.remove(0);
       }
@@ -180,7 +240,6 @@ const GraphModal = () => {
       option.value = "";
       mesesSelect.add(option);
 
-      // Adicione as opções apenas para os meses correspondentes ao ano selecionado
       filteredMonths.forEach((month) => {
         const monthName = getMonthName(month);
         const option = document.createElement("option");
@@ -210,7 +269,7 @@ const GraphModal = () => {
           y: {
             title: {
               display: true,
-              text: "Dinheiro Ganho €",
+              text: "Lucro €",
             },
             min: 0,
           },
@@ -238,7 +297,6 @@ const GraphModal = () => {
       );
       const diasSelect = document.getElementById("dias");
 
-      // Remova as opções existentes no campo de seleção de dias
       while (diasSelect.options.length > 0) {
         diasSelect.remove(0);
       }
@@ -248,7 +306,6 @@ const GraphModal = () => {
       option.value = "";
       diasSelect.add(option);
 
-      // Adicione as opções apenas para os dias correspondentes ao ano selecionado
       filteredDays.forEach((day) => {
         const option = document.createElement("option");
         option.text = day;
@@ -274,7 +331,7 @@ const GraphModal = () => {
           y: {
             title: {
               display: true,
-              text: "Dinheiro Ganho €",
+              text: "Lucro €",
             },
             min: 0,
           },
@@ -302,7 +359,7 @@ const GraphModal = () => {
           y: {
             title: {
               display: true,
-              text: "Dinheiro Ganho €",
+              text: "Lucro €",
             },
             min: 0,
           },
@@ -332,7 +389,7 @@ const GraphModal = () => {
           y: {
             title: {
               display: true,
-              text: "Dinheiro Ganho €",
+              text: "Lucro €",
             },
             min: 0,
           },
@@ -358,7 +415,7 @@ const GraphModal = () => {
           y: {
             title: {
               display: true,
-              text: "Dinheiro Ganho €",
+              text: "Lucro €",
             },
             min: 0,
           },
@@ -374,6 +431,9 @@ const GraphModal = () => {
           className="Grafico"
           onClick={() => {
             handleModalOpen();
+            fetchStoredDadosAnoMessages();
+            fetchStoredDadosDiaMessages();
+            fetchStoredDadosMesMessages();
           }}
         >
           <span className="Grafico_lg">
@@ -521,6 +581,18 @@ const GraphModal = () => {
                             <LineChart
                               chartDadosMessages={filteredChartData}
                               chartOptions={chartOptions}
+                            />
+                          </div>
+                        </>
+                      );
+                    } else {
+                      return (
+                        <>
+                          <div style={{ width: 700 }}>
+                            <h3>{`-`}</h3>
+                            <LineChart
+                              chartDadosMessages={chartDataDefault}
+                              chartOptions={chartOptionsDefault}
                             />
                           </div>
                         </>

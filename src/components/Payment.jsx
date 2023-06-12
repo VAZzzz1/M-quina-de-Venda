@@ -1,10 +1,8 @@
 import defaultProducts from "./defaultProducts";
-import defaultCoins from "./defaultCoins";
 import { toast } from "react-toastify";
 import { logAndStore } from "./log";
-import { StoreMesGrafico } from "./GraficoMes";
-import { StoreAnoGrafico } from "./GraficoAno";
-import { StoreDiaGrafico } from "./GraficoDia";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Payment = ({
   total,
@@ -12,83 +10,182 @@ const Payment = ({
   setSelectedProduct,
   setTotalCoins,
   coinList,
+  setCoinList,
+  products,
+  setProducts,
+  coinsVault,
+  setCoinsVault,
 }) => {
-  const storedProducts = localStorage.getItem("products");
-
-  const products = storedProducts
-    ? JSON.parse(storedProducts)
-    : defaultProducts;
-
-  const updateProductsInLocalStorage = () => {
-    localStorage.setItem("products", JSON.stringify(products));
-  };
-
-  const QuantProduto = () => {
-    products.forEach((product) => {
-      if (selectedProduct && selectedProduct.name === product.name) {
-        if (selectedProduct.quantity !== 0) {
-          product.quantity = selectedProduct.quantity - 1;
-          updateProductsInLocalStorage();
+  const QuantProduto = async () => {
+    const updatedProducts = await Promise.all(
+      products.map(async (product) => {
+        if (selectedProduct && selectedProduct.name === product.name) {
+          if (selectedProduct.quantity !== 0) {
+            if (product.id === selectedProduct.id) {
+              let id = selectedProduct.id;
+              try {
+                await axios.post(
+                  `https://localhost:7062/Products/postProducts/${id}`,
+                  { ...selectedProduct, quantity: selectedProduct.quantity - 1 }
+                );
+                return { ...product, quantity: selectedProduct.quantity - 1 };
+              } catch (error) {
+                console.error(error);
+                return product;
+              }
+            }
+          }
         }
-      }
-    });
+        return product;
+      })
+    );
+
+    setProducts(updatedProducts);
   };
 
-  const storedCoins = localStorage.getItem("coinsVault");
-
-  const coinsVault = storedCoins ? JSON.parse(storedCoins) : defaultCoins;
-
-  const updateCoinsVaultInLocalStorage = () => {
-    localStorage.setItem("coinsVault", JSON.stringify(coinsVault ));
-  };
-
-  const change = () => {
-    coinsVault.forEach((coin, index) => {
-      if (
-        (total / 100 - selectedProduct.price).toFixed(2) >=
-        coinsVault[index].moeda / 100
-      ) {
-        if (coin.moeda === coinsVault[index].moeda) {
-          coinsVault[index].quantidade = coin.quantidade - 1;
-          coinsVault[index].valorTotal = (coin.moeda * coin.quantidade) / 100;
-          total = total - coinsVault[index].moeda;
-          updateCoinsVaultInLocalStorage();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          "https://localhost:7062/Products/getProducts"
+        );
+        if (response.data.length <= 0) {
+          defaultProducts.forEach(async (product) => {
+            try {
+              await axios.post(
+                "https://localhost:7062/Products/postProducts",
+                product
+              );
+            } catch (error) {
+              console.error(error);
+            }
+          });
         }
+        setProducts(response.data || "");
+      } catch (error) {
+        console.error(error);
       }
-    });
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const responseAno = await axios.get(
+          "https://localhost:7062/dadosAnoMessages/getdadosAnoMessages"
+        );
+        setDadosAnoMessages(responseAno.data);
+
+        const responseMes = await axios.get(
+          "https://localhost:7062/dadosMesMessages/getdadosMesMessages"
+        );
+        setDadosMesMessages(responseMes.data);
+
+        const responseDia = await axios.get(
+          "https://localhost:7062/dadosDiaMessages/getdadosDiaMessages"
+        );
+        setDadosDiaMessages(responseDia.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMessages();
+  }, []);
+
+  useEffect(() => {
+    const fetchCoinsVault = async () => {
+      try {
+        const response = await axios.get(
+          "https://localhost:7062/coins/getCoinsVault"
+        );
+        setCoinsVault(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCoinsVault();
+  }, []);
+
+  const change = async () => {
+    const updatedCoinsVault = await Promise.all(
+      coinsVault.map(async (coin) => {
+        if (
+          (total / 100 - selectedProduct.price).toFixed(2) >=
+          coin.moeda / 100
+        ) {
+          const updatedQuantidade = coin.quantidade - 1;
+          const updatedValorTotal = (coin.moeda * updatedQuantidade) / 100;
+          const id = coin.id;
+          total = total - coin.moeda;
+
+          await axios.post(
+            `https://localhost:7062/coins/postCoinsVault/${id}`,
+            {
+              ...coin,
+              quantidade: updatedQuantidade,
+              valorTotal: updatedValorTotal,
+            }
+          );
+
+          return {
+            ...coin,
+            quantidade: updatedQuantidade,
+            valorTotal: updatedValorTotal,
+          };
+        }
+        return coin;
+      })
+    );
+
+    try {
+      setCoinsVault(updatedCoinsVault);
+    } catch (error) {
+      console.error(error);
+    }
+
+    try {
+      const updatedCoinsVaultList = await Promise.all(
+        updatedCoinsVault.map(async (coin) => {
+          const foundCoin = coinList.find((c) => c === coin.moeda);
+
+          const updatedQuantidade = foundCoin
+            ? coin.quantidade + 1
+            : coin.quantidade;
+          const updatedValorTotal = (coin.moeda * updatedQuantidade) / 100;
+          const id = coin.id;
+
+          await axios.post(
+            `https://localhost:7062/coins/postCoinsVault/${id}`,
+            {
+              ...coin,
+              quantidade: updatedQuantidade,
+              valorTotal: updatedValorTotal,
+            }
+          );
+
+          return {
+            ...coin,
+            quantidade: updatedQuantidade,
+            valorTotal: updatedValorTotal,
+          };
+        })
+      );
+      setCoinsVault(updatedCoinsVaultList);
+      setCoinList(new Array(coinList.length).fill(0));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const storedDadosDiaMessages = localStorage.getItem("dadosDiaMessages");
+  const [dadosAnoMessages, setDadosAnoMessages] = useState([]);
+  const [dadosMesMessages, setDadosMesMessages] = useState([]);
+  const [dadosDiaMessages, setDadosDiaMessages] = useState([]);
 
-  const dadosDiaMessages = storedDadosDiaMessages
-    ? JSON.parse(storedDadosDiaMessages)
-    : null;
-
-  const updateDadosDiaInLocalStorage = () => {
-    localStorage.setItem("dadosDiaMessages", JSON.stringify(dadosDiaMessages));
-  };
-
-  const storedDadosMesMessages = localStorage.getItem("dadosMesMessages");
-
-  const dadosMesMessages = storedDadosMesMessages
-    ? JSON.parse(storedDadosMesMessages)
-    : null;
-
-  const updateDadosMesInLocalStorage = () => {
-    localStorage.setItem("dadosMesMessages", JSON.stringify(dadosMesMessages));
-  };
-
-  const storedDadosAnoMessages = localStorage.getItem("dadosAnoMessages");
-
-  const dadosAnoMessages = storedDadosAnoMessages
-    ? JSON.parse(storedDadosAnoMessages)
-    : null;
-
-  const updateDadosAnoInLocalStorage = () => {
-    localStorage.setItem("dadosAnoMessages", JSON.stringify(dadosAnoMessages));
-  };
-
-  const grafico = (price) => {
+  const GraficoDia = async (price) => {
     const now = new Date();
     const day = now.getDate();
     const month = now.getMonth() + 1;
@@ -96,9 +193,9 @@ const Payment = ({
     const hour = now.getHours();
     let bool = false;
 
-    if (dadosDiaMessages !== null) {
+    if (dadosDiaMessages.length > 0) {
       bool = false;
-      dadosDiaMessages.forEach((dadoDia) => {
+      dadosDiaMessages.forEach(async (dadoDia) => {
         if (
           dadoDia.hour === hour &&
           dadoDia.day === now.getDate() &&
@@ -108,37 +205,60 @@ const Payment = ({
           dadoDia.price = Number(dadoDia.price);
           dadoDia.price += selectedProduct.price;
           dadoDia.price = dadoDia.price.toFixed(2);
-          updateDadosDiaInLocalStorage();
+
+          await axios.post(
+            `https://localhost:7062/dadosDiaMessages/postdadosDiaMessages/${dadoDia.id}`,
+            {
+              hour: dadoDia.hour,
+              day: dadoDia.day,
+              price: dadoDia.price,
+              month: dadoDia.month,
+              year: dadoDia.year,
+            }
+          );
+
+          const responseDia = await axios.get(
+            "https://localhost:7062/dadosDiaMessages/getdadosDiaMessages"
+          );
+          setDadosDiaMessages(responseDia.data);
+
           bool = true;
         }
         if (bool === false) {
-          StoreDiaGrafico([
-            {
-              hour: hour,
-              day: day,
-              price: price,
-              month: month,
-              year: year,
-            },
-          ]);
+          await axios.post(
+            "https://localhost:7062/dadosDiaMessages/postdadosDiaMessages",
+            [{ hour: hour, day: day, price: price, month: month, year: year }]
+          );
+
+          const responseDia = await axios.get(
+            "https://localhost:7062/dadosDiaMessages/getdadosDiaMessages"
+          );
+          setDadosDiaMessages(responseDia.data);
           bool = true;
         }
       });
     } else {
-      StoreDiaGrafico([
-        {
-          hour: hour,
-          day: day,
-          price: price,
-          month: month,
-          year: year,
-        },
-      ]);
-    }
+      await axios.post(
+        "https://localhost:7062/dadosDiaMessages/postdadosDiaMessages",
+        [{ hour: hour, day: day, price: price, month: month, year: year }]
+      );
 
-    if (dadosMesMessages !== null) {
+      const responseDia = await axios.get(
+        "https://localhost:7062/dadosDiaMessages/getdadosDiaMessages"
+      );
+      setDadosDiaMessages(responseDia.data);
+    }
+  };
+
+  const GraficoMes = async (price) => {
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    let bool = false;
+    if (dadosMesMessages.length > 0) {
       bool = false;
-      dadosMesMessages.forEach((dadoMes) => {
+      dadosMesMessages.forEach(async (dadoMes) => {
         if (
           dadoMes.day === now.getDate() &&
           dadoMes.month === now.getMonth() + 1 &&
@@ -147,35 +267,58 @@ const Payment = ({
           dadoMes.price = Number(dadoMes.price);
           dadoMes.price += selectedProduct.price;
           dadoMes.price = dadoMes.price.toFixed(2);
-          updateDadosMesInLocalStorage();
+
+          await axios.post(
+            `https://localhost:7062/dadosMesMessages/postdadosMesMessages/${dadoMes.id}`,
+            {
+              day: dadoMes.day,
+              price: dadoMes.price,
+              month: dadoMes.month,
+              year: dadoMes.year,
+            }
+          );
+
+          const responseMes = await axios.get(
+            "https://localhost:7062/dadosMesMessages/getdadosMesMessages"
+          );
+          setDadosMesMessages(responseMes.data);
+
           bool = true;
         }
         if (bool === false) {
-          StoreMesGrafico([
-            {
-              day: day,
-              price: price,
-              month: month,
-              year: year,
-            },
-          ]);
+          await axios.post(
+            "https://localhost:7062/dadosMesMessages/postdadosMesMessages",
+            [{ day: day, price: price, month: month, year: year }]
+          );
+
+          const responseMes = await axios.get(
+            "https://localhost:7062/dadosMesMessages/getdadosMesMessages"
+          );
+          setDadosMesMessages(responseMes.data);
           bool = true;
         }
       });
     } else {
-      StoreMesGrafico([
-        {
-          day: day,
-          price: price,
-          month: month,
-          year: year,
-        },
-      ]);
-    }
+      await axios.post(
+        "https://localhost:7062/dadosMesMessages/postdadosMesMessages",
+        [{ day: day, price: price, month: month, year: year }]
+      );
 
-    if (dadosAnoMessages !== null) {
+      const responseMes = await axios.get(
+        "https://localhost:7062/dadosMesMessages/getdadosMesMessages"
+      );
+      setDadosMesMessages(responseMes.data);
+    }
+  };
+
+  const GraficoAno = async (price) => {
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+    let bool = false;
+    if (dadosAnoMessages.length > 0) {
       bool = false;
-      dadosAnoMessages.forEach((dadoAno) => {
+      dadosAnoMessages.forEach(async (dadoAno) => {
         if (
           dadoAno.month === now.getMonth() + 1 &&
           dadoAno.year === now.getFullYear()
@@ -183,43 +326,42 @@ const Payment = ({
           dadoAno.price = Number(dadoAno.price);
           dadoAno.price += selectedProduct.price;
           dadoAno.price = dadoAno.price.toFixed(2);
-          updateDadosAnoInLocalStorage();
+
+          await axios.post(
+            `https://localhost:7062/dadosAnoMessages/postdadosAnoMessages/${dadoAno.id}`,
+            { price: dadoAno.price, month: dadoAno.month, year: dadoAno.year }
+          );
+
+          const responseAno = await axios.get(
+            "https://localhost:7062/dadosAnoMessages/getdadosAnoMessages"
+          );
+          setDadosAnoMessages(responseAno.data);
+
           bool = true;
         }
         if (bool === false) {
-          StoreAnoGrafico([
-            {
-              price: price,
-              month: month,
-              year: year,
-            },
-          ]);
+          await axios.post(
+            "https://localhost:7062/dadosAnoMessages/postdadosAnoMessages",
+            [{ price: price, month: month, year: year }]
+          );
+
+          const responseAno = await axios.get(
+            "https://localhost:7062/dadosAnoMessages/getdadosAnoMessages"
+          );
+          setDadosAnoMessages(responseAno.data);
           bool = true;
         }
       });
     } else {
-      StoreAnoGrafico([
-        {
-          price: price,
-          month: month,
-          year: year,
-        },
-      ]);
-    }
-  };
+      await axios.post(
+        "https://localhost:7062/dadosAnoMessages/postdadosAnoMessages",
+        [{ price: price, month: month, year: year }]
+      );
 
-  const addMoney = () => {
-    coinList.forEach((coin1, index1) => {
-      coinsVault.forEach((coin2, index2) => {
-        if (coinList[index1] === coinsVault[index2].moeda) {
-          coinsVault[index2].quantidade = coin2.quantidade + 1;
-          coinsVault[index2].valorTotal = (coin2.moeda * coin2.quantidade) / 100;
-          updateCoinsVaultInLocalStorage();
-        }
-      });
-    });
-    for (let i = 0; i < coinList.length; i++) {
-      coinList[i] = 0;
+      const responseAno = await axios.get(
+        "https://localhost:7062/dadosAnoMessages/getdadosAnoMessages"
+      );
+      setDadosAnoMessages(responseAno.data);
     }
   };
 
@@ -238,7 +380,6 @@ const Payment = ({
   const handlePurchase = () => {
     if (selectedProduct === null) {
       toast.error(`Selecione uma bebida!`, { autoClose: 3000 });
-      console.log(`Selecione uma bebida!`);
     } else if (selectedProduct.quantity === 0) {
       logAndStore(
         `A bebida: ${selectedProduct.name} está esgotada - ${getCurrentTime()}`
@@ -255,11 +396,13 @@ const Payment = ({
       toast.success(`${selectedProduct.name} comprada com sucesso!`, {
         autoClose: 3000,
       });
-      grafico(selectedProduct.price);
+      GraficoDia(selectedProduct.price);
+      GraficoMes(selectedProduct.price);
+      GraficoAno(selectedProduct.price);
       QuantProduto();
       setSelectedProduct(null);
       setTotalCoins(0);
-      addMoney();
+      change();
     } else if (total / 100 > selectedProduct.price) {
       logAndStore(
         `Comprou a bebida: ${selectedProduct.name} (${
@@ -276,12 +419,13 @@ const Payment = ({
         ).toFixed(2)} €!`,
         { autoClose: 4000 }
       );
-      grafico(selectedProduct.price);
+      GraficoDia(selectedProduct.price);
+      GraficoMes(selectedProduct.price);
+      GraficoAno(selectedProduct.price);
       change();
       QuantProduto();
       setSelectedProduct(null);
       setTotalCoins(0);
-      addMoney();
     }
   };
 

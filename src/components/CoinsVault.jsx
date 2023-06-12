@@ -1,14 +1,36 @@
+import React, { useEffect } from "react";
+import axios from "axios";
 import defaultCoins from "./defaultCoins";
 import "../css/coin.css";
 
-const CoinsVault = () => {
-  const storedCoins = localStorage.getItem("coinsVault");
+const CoinsVault = ({coinsVault, setCoinsVault}) => {
 
-  const coinsVault = storedCoins ? JSON.parse(storedCoins) : defaultCoins;
+  useEffect(() => {
+    const fetchCoinsVault = async () => {
+      try {
+        const response = await axios.get(
+          "https://localhost:7062/coins/getCoinsVault"
+        );
+        if (response.data.length <= 0) {
+            try {
+              await axios.post("https://localhost:7062/coins/postCoinsVault", defaultCoins);
+              const response = await axios.get(
+                "https://localhost:7062/coins/getCoinsVault"
+              );
+              setCoinsVault(response.data);
+            } catch (error) {
+              console.error(error);
+            }
+        } else {
+        setCoinsVault(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  if (!storedCoins) {
-    localStorage.setItem("coinsVault", JSON.stringify(defaultCoins));
-  }
+    fetchCoinsVault();
+  }, []);
 
   return (
     <div className="coinvault">
@@ -22,25 +44,19 @@ const CoinsVault = () => {
             <th>Quantidade</th>
             <th>Valor Total</th>
           </tr>
-          {coinsVault.map((coin) => {
-            if (coin.moeda >= 100) {
-              return (
-                <tr key={coin.moeda}>
-                  <td>{coin.moeda / 100} €</td>
-                  <td>{coin.quantidade}</td>
-                  <td>{((coin.moeda / 100) * coin.quantidade).toFixed(2)} €</td>
-                </tr>
-              );
-            } else {
-              return (
-                <tr key={coin.moeda}>
-                  <td>{coin.moeda} Cent</td>
-                  <td>{coin.quantidade}</td>
-                  <td>{((coin.moeda / 100) * coin.quantidade).toFixed(2)} €</td>
-                </tr>
-              );
-            }
-          })}
+          {coinsVault
+            .sort((a, b) => b.moeda - a.moeda)
+            .map((coin) => (
+              <tr key={coin.moeda}>
+                <td>
+                  {coin.moeda >= 100
+                    ? coin.moeda / 100 + " EUR"
+                    : coin.moeda + " cent"}
+                </td>
+                <td>{coin.quantidade}</td>
+                <td>{((coin.moeda / 100) * coin.quantidade).toFixed(2)} EUR</td>
+              </tr>
+            ))}
         </table>
       </div>
     </div>

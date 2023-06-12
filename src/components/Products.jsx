@@ -1,18 +1,24 @@
 import React from "react";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import defaultProducts from "./defaultProducts";
+import axios from "axios";
+import { useState } from "react";
 
 const Product = ({ product, onClick, totalCoins }) => {
-  const storedProducts = localStorage.getItem("products");
+  const [products, setProducts] = useState([]);
 
-  const products = storedProducts
-    ? JSON.parse(storedProducts)
-    : defaultProducts;
-
-  if (!storedProducts) {
-    localStorage.setItem("products", JSON.stringify(defaultProducts));
-  }
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('https://localhost:7062/Products/getProducts');
+        setProducts(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     products.forEach((p) => {
@@ -70,7 +76,11 @@ const Product = ({ product, onClick, totalCoins }) => {
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div className="prodcontainer" id={product.name} onClick={() => handleSelectProduct(product)}>
+    <div
+      className="prodcontainer"
+      id={product.name}
+      onClick={() => handleSelectProduct(product)}
+    >
       <div className="name">
         <h2>{product.name}</h2>
       </div>

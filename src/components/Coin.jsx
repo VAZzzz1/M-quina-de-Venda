@@ -1,7 +1,25 @@
 import { toast } from "react-toastify";
 import { logAndStore } from "./log";
+import { useEffect } from "react";
+import axios from "axios";
 
-const Coin = ({ setTotalCoins, setCoinList }) => {
+const Coin = ({ setTotalCoins, setCoinList, coinsVault, setCoinsVault }) => {
+
+  useEffect(() => {
+    const fetchCoinsVault = async () => {
+      try {
+        const response = await axios.get(
+          "https://localhost:7062/coins/getCoinsVault"
+        );
+        setCoinsVault(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCoinsVault();
+  }, []);
+
   const getCurrentTime = () => {
     const date = new Date();
     const options = {
@@ -41,10 +59,29 @@ const Coin = ({ setTotalCoins, setCoinList }) => {
         <h2>Introduza Moedas</h2>
       </div>
       <div className="moedas">
-        <button onClick={() => handleInsertCoins(20)}>{20} Cent</button>
-        <button onClick={() => handleInsertCoins(50)}>{50} Cent</button>
-        <button onClick={() => handleInsertCoins(100)}>{1} €</button>
-        <button onClick={() => handleInsertCoins(200)}>{2} €</button>
+        {coinsVault
+          .sort((a, b) => a.moeda - b.moeda)
+          .map((coin) => {
+            if (coin.moeda >= 100) {
+              return (
+                <button
+                  key={coin.id}
+                  onClick={() => handleInsertCoins(coin.moeda)}
+                >
+                  {coin.moeda / 100} EUR
+                </button>
+              );
+            } else {
+              return (
+                <button
+                  key={coin.id}
+                  onClick={() => handleInsertCoins(coin.moeda)}
+                >
+                  {coin.moeda} Cent
+                </button>
+              );
+            }
+          })}
       </div>
     </div>
   );

@@ -2,11 +2,14 @@ import defaultProducts from "./defaultProducts";
 import Product from "./Products";
 import { logAndStore } from "./log";
 import { useEffect } from "react";
+import axios from "axios";
 
 const ProductsMachine = ({
   setSelectedProduct,
   selectedProduct,
   totalCoins,
+  products,
+  setProducts
 }) => {
   const getCurrentTime = () => {
     const date = new Date();
@@ -20,15 +23,26 @@ const ProductsMachine = ({
     return `${date.toLocaleDateString("pt-PT", options)}`;
   };
 
-  const storedProducts = localStorage.getItem("products");
-
-  const products = storedProducts
-    ? JSON.parse(storedProducts)
-    : defaultProducts;
-
-  if (!storedProducts) {
-    localStorage.setItem("products", JSON.stringify(defaultProducts));
-  }
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('https://localhost:7062/Products/getProducts');
+        if (response.data.length <= 0) {
+          await axios.post("https://localhost:7062/Products/postProducts", defaultProducts);
+          const response = await axios.get(
+            "https://localhost:7062/Products/getProducts"
+          );
+          setProducts(response.data);
+        } else {
+          setProducts(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     if (selectedProduct === null) {

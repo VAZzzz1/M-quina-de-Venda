@@ -1,8 +1,7 @@
-import "../css/style.css";
-import GraphModal from "./Grafico";
 import CoinsVault from "./CoinsVault";
 import { useState } from "react";
-import Coin from "./Coin.jsx";
+import GraphModal from "./Grafico.jsx";
+import Coin from "./Coin";
 import Payment from "./Payment";
 import ProductsMachine from "./ProductsMachine";
 import Log from "./Log.jsx";
@@ -13,6 +12,8 @@ const VendingMachine = () => {
   const [totalCoins, setTotalCoins] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [coinList, setCoinList] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [coinsVault, setCoinsVault] = useState([]);
 
   return (
     <div className="vending-machine">
@@ -21,19 +22,31 @@ const VendingMachine = () => {
           setSelectedProduct={setSelectedProduct}
           selectedProduct={selectedProduct}
           totalCoins={totalCoins}
+          products={products}
+          setProducts={setProducts}
         />
       </div>
       <div className="right">
         <ToastContainer />
-        <Coin setTotalCoins={setTotalCoins} setCoinList={setCoinList} />
+        <Coin
+          setTotalCoins={setTotalCoins}
+          setCoinList={setCoinList}
+          coinsVault={coinsVault}
+          setCoinsVault={setCoinsVault}
+        />
         <Payment
           total={totalCoins}
           selectedProduct={selectedProduct}
           setSelectedProduct={setSelectedProduct}
           setTotalCoins={setTotalCoins}
           coinList={coinList}
+          setCoinList={setCoinList}
+          products={products}
+          setProducts={setProducts}
+          coinsVault={coinsVault}
+          setCoinsVault={setCoinsVault}
         />
-        <CoinsVault />
+        <CoinsVault coinsVault={coinsVault} setCoinsVault={setCoinsVault} />
         <Log />
         <GraphModal />
       </div>
