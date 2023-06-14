@@ -441,6 +441,25 @@ body {
   background-color: transparent;
   margin-bottom: 20px;
   cursor: pointer;
+  position: relative;
+  left: 413px;
+  bottom: 30px;
+}
+
+#modal .buttons .fecha {
+  border-radius: 15px;
+  padding: 10px;
+  width: 100px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  margin-bottom: 20px;
+  cursor: pointer;
+  position: relative;
+  left: 513px;
+  bottom: 30px;
 }
 
 #modal .buttons {
@@ -757,6 +776,30 @@ select:focus {
 }
 
 .fecha-button:active {
+  filter: brightness(0.8);
+}
+
+.fecha::before {
+  top: -1em;
+  left: -1em;
+}
+
+.fecha::after {
+  left: calc(100% + 1em);
+  top: calc(100% + 1em);
+}
+
+.fecha:hover::before,
+.fecha:hover::after {
+  height: 210px;
+  width: 210px;
+}
+
+.fecha:hover {
+  color: red;
+}
+
+.fecha:active {
   filter: brightness(0.8);
 }
 

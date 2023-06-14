@@ -445,7 +445,7 @@ const GraphModal = () => {
           <Modal>
             <div className="buttons">
               <button
-                className="fecha-button"
+                className="fecha"
                 onClick={() => setShowModal(false)}
               >
                 X
