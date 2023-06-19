@@ -98,7 +98,7 @@ const GraphModal = () => {
 
   const getMonthName = (monthNumber) => {
     const date = new Date();
-    date.setMonth(monthNumber - 1); // Definir o mês na data
+    date.setMonth(monthNumber - 1);
     const monthName = format(date, "LLLL", { locale: pt });
     return capitalize(monthName);
   };

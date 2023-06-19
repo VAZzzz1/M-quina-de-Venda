@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useState } from "react";
+import "../css/products.css";
 
 const Product = ({ product, onClick, totalCoins }) => {
   const [products, setProducts] = useState([]);
@@ -10,13 +11,15 @@ const Product = ({ product, onClick, totalCoins }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://localhost:7062/Products/getProducts');
+        const response = await axios.get(
+          "https://localhost:7062/Products/getProducts"
+        );
         setProducts(response.data);
       } catch (error) {
         console.error(error);
       }
     };
-  
+
     fetchProducts();
   }, []);
 
@@ -74,27 +77,147 @@ const Product = ({ product, onClick, totalCoins }) => {
     document.getElementById(product.name).setAttribute("data-selected", "true");
   };
 
+  const [Editar, setEditar] = useState(false);
+
+  const handleEditClick = () => {
+    setEditar(true);
+  };
+
+  const handleCancelClick = () => {
+    setEditar(false);
+  };
+
+  const handleSaveClick = async () => {
+    if (document.getElementById("price").value !== "") {
+      if (document.getElementById("quantity").value !== "") {
+        setEditar(false);
+        try {
+          const price = parseFloat(document.getElementById("price").value);
+          const quantity = parseInt(document.getElementById("quantity").value);
+          const id = product.id;
+
+          await axios.post(
+            `https://localhost:7062/Products/postProducts/${id}`,
+            {
+              ...product,
+              price: price,
+              quantity: quantity,
+            }
+          );
+
+          const fetchProducts = async () => {
+            try {
+              const response = await axios.get(
+                "https://localhost:7062/Products/getProducts"
+              );
+              setProducts(response.data);
+            } catch (error) {
+              console.error(error);
+            }
+          };
+          setTimeout(() => {
+            window.location.reload();
+          });
+          fetchProducts();
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        toast.error(`Por favor, forneça um valor válido para a quantidade!`, {
+          autoClose: 3500,
+        });
+      }
+    } else {
+      toast.error(`Por favor, forneça um valor válido para o preço!`, {
+        autoClose: 3500,
+      });
+    }
+  };
+
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div
-      className="prodcontainer"
-      id={product.name}
-      onClick={() => handleSelectProduct(product)}
-    >
-      <div className="name">
-        <h2>{product.name}</h2>
+    <div>
+      <div
+        className={`product ${Editar ? "edição" : ""}`}
+        id={product.name}
+        onClick={() => handleSelectProduct(product)}
+        onKeyDown={(e) => {
+          if (e.key === "") {
+            handleSelectProduct(product);
+          }
+        }}
+        role="button"
+        tabIndex={0}
+      >
+        <div className="name">
+          <h2>{product.name}</h2>
+        </div>
+        <div className="image">
+          <img src={product.image} alt={product.name} />
+        </div>
+        <div className="price">
+          <h3>
+            {Editar ? (
+              <input
+                className="ep"
+                id="price"
+                type="number"
+                defaultValue={product.price.toFixed(2)}
+                required
+              />
+            ) : (
+              `${product.price.toFixed(2)}`
+            )}
+            €
+          </h3>
+        </div>
+        <div>
+          {product.quantity === 0 ? (
+            <p style={{ color: "red" }}>
+              Quantidade:{" "}
+              {Editar ? (
+                <input
+                  className="ep"
+                  id="quantity"
+                  type="text"
+                  defaultValue={product.quantity}
+                  required
+                />
+              ) : (
+                `Esgotado`
+              )}
+            </p>
+          ) : (
+            <p>
+              Quantidade:{" "}
+              {Editar ? (
+                <input
+                  className="ep"
+                  id="quantity"
+                  type="number"
+                  defaultValue={product.quantity}
+                  required
+                />
+              ) : (
+                `${product.quantity}`
+              )}
+            </p>
+          )}
+        </div>
       </div>
-      <div className="image">
-        <img src={product.image} alt={product.name} />
-      </div>
-      <div className="price">
-        <h3>{product.price.toFixed(2)} €</h3>
-      </div>
-      <div className="quantity">
-        {product.quantity === 0 ? (
-          <p style={{ color: "red" }}>Esgotado</p>
+      <div className="edit">
+        {Editar ? (
+          <div>
+            <button className="confirmar" onClick={handleSaveClick}>
+              Confirmar
+            </button>
+            <button className="cancelar" onClick={handleCancelClick}>
+              Cancelar
+            </button>
+          </div>
         ) : (
-          <p>Quantidade: {product.quantity}</p>
+          <button className="editar" onClick={handleEditClick}>
+            Editar
+          </button>
         )}
       </div>
     </div>

@@ -1,0 +1,175 @@
+
+.product {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .product.edit-mode {
+    border-color: #ff5252;
+  }
+  
+  .product:hover {
+    border-color: #2196f3;
+  }
+  
+  .price {
+    font-size: 16px;
+  }
+
+  .produtos .product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+  
+  h3 {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .quant {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  input.ep {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 16px;
+  }
+  
+  input.ep:focus {
+    outline: none;
+    border-color: #3b82f6;
+  }
+  
+  input.ep::placeholder {
+    color: #888888;
+  }
+  
+  input.ep:hover {
+    background-color: #f1f1f1;
+  }
+  
+  input.ep:disabled {
+    background-color: #f9f9f9;
+    color: #888888;
+    cursor: not-allowed;
+  }
+  
+  
+  .edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  button.editar {
+    font-family: monospace;
+    background-color: #a8c5f74d;
+    color: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    width: 200px;
+    height: 45px;
+    transition: 0.3s;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  button.editar:hover {
+    background-color: #3b82f6;
+    box-shadow: 0 0 0 5px #3b83f65f;
+    color: #fff;
+  }
+
+  button.confirmar {
+    font-family: monospace;
+    background-color: #b9f6ca;
+    color: #256c33;
+    border: none;
+    border-radius: 8px;
+    width: 140px;
+    height: 45px;
+    transition: 0.3s;
+    font-size: 17px;
+    cursor: pointer;
+    position: relative;
+    right: 10px;
+  }
+  
+  button.confirmar:hover {
+    background-color: #256c33;
+    box-shadow: 0 0 0 5px #256c334d;
+    color: #fff;
+  } 
+
+  button.cancelar {
+    font-family: monospace;
+    background-color: #f6b9b9;
+    color: #6c2525;
+    border: none;
+    border-radius: 8px;
+    width: 140px;
+    height: 45px;
+    transition: 0.3s;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  
+  button.cancelar:hover {
+    background-color: #6c2525;
+    box-shadow: 0 0 0 5px #911a1a4d;
+    color: #fff;
+  } 
+  
+  img.edit-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .quant p {
+    color: rgb(0, 0, 0);
+  }
+
+  @media screen and (max-width: 1440px) {
+    .produtos .image {
+    margin-top: 20px;
+    width: 170px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 5%;
+    position: relative;
+  }
+
+  .produtos .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    position: relative;
+    top: -10px;
+    right: 40px;
+  }
+  }
+
+  
+  
+
+  

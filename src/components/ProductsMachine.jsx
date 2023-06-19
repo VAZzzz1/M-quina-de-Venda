@@ -59,7 +59,7 @@ const ProductsMachine = ({
 
   let timeoutId;
 
-  const handleSelectProducts = (product) => {
+  const handleSelectProduct = (product) => {
     clearTimeout(timeoutId);
     setSelectedProduct(product);
     logAndStore(`Selecionou a bebida ${product.name} - ${getCurrentTime()}`);
@@ -82,7 +82,7 @@ const ProductsMachine = ({
         <Product
           key={product.name}
           product={product}
-          onClick={handleSelectProducts}
+          onClick={handleSelectProduct}
           selectedProduct={selectedProduct}
           totalCoins={totalCoins}
         />

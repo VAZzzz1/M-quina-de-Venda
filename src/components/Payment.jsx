@@ -16,6 +16,7 @@ const Payment = ({
   coinsVault,
   setCoinsVault,
 }) => {
+  
   const QuantProduto = async () => {
     const updatedProducts = await Promise.all(
       products.map(async (product) => {
