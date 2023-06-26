@@ -54,6 +54,17 @@ const Product = ({ product, onClick, totalCoins }) => {
       return;
     }
 
+    if (product.quantity === 0) {
+      toast.error(
+        `Já não há mais ${product.name}. Espere até a máquina ser reabastecida!`,
+        { autoClose: 2000 }
+      );
+      document.getElementById(product.name).style.backgroundColor = "#a8c5f74d";
+      document.getElementById(product.name).style.opacity = "30%";
+      document.getElementById(product.name).removeAttribute("data-selected");
+      return;
+    }
+
     onClick(product);
 
     toast.info(`Selecionou a bebida ${product.name}!`, { autoClose: 2000 });
@@ -139,9 +150,13 @@ const Product = ({ product, onClick, totalCoins }) => {
       <div
         className={`product ${Editar ? "edição" : ""}`}
         id={product.name}
-        onClick={() => handleSelectProduct(product)}
+        onClick={() => {
+          if (!Editar) {
+            handleSelectProduct(product);
+          }
+        }}
         onKeyDown={(e) => {
-          if (e.key === "") {
+          if (e.key === "Enter") {
             handleSelectProduct(product);
           }
         }}

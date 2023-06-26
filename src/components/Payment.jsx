@@ -114,29 +114,30 @@ const Payment = ({
   const change = async () => {
     const updatedCoinsVault = await Promise.all(
       coinsVault.map(async (coin) => {
-        if (
-          (total / 100 - selectedProduct.price).toFixed(2) >=
-          coin.moeda / 100
-        ) {
-          const updatedQuantidade = coin.quantidade - 1;
-          const updatedValorTotal = (coin.moeda * updatedQuantidade) / 100;
-          const id = coin.id;
-          total = total - coin.moeda;
+        if (total / 100 - selectedProduct.price >= coin.moeda / 100) {
+          if (coin.quantidade !== 0) {
+            let updatedQuantidade = coin.quantidade;
+            let updatedValorTotal = coin.valorTotal;
+            let id = coin.id;
+            
+            do {
+              updatedQuantidade -= 1;
+              updatedValorTotal = (coin.moeda * updatedQuantidade) / 100;
+              total -= coin.moeda;
+            } while (total / 100 - selectedProduct.price >= coin.moeda / 100);
 
-          await axios.post(
-            `https://localhost:7062/coins/postCoinsVault/${id}`,
-            {
+            await axios.post(`https://localhost:7062/coins/postCoinsVault/${id}`, {
+                ...coin,
+                quantidade: updatedQuantidade,
+                valorTotal: updatedValorTotal,
+            });
+    
+            return {
               ...coin,
               quantidade: updatedQuantidade,
               valorTotal: updatedValorTotal,
-            }
-          );
-
-          return {
-            ...coin,
-            quantidade: updatedQuantidade,
-            valorTotal: updatedValorTotal,
-          };
+            };
+          }
         }
         return coin;
       })
