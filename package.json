@@ -28,7 +28,7 @@
     "ag-grid-community": "^29.3.5",
     "ag-grid-react": "^29.3.5",
     "axios": "^1.4.0",
-    "chart.js": "^4.3.0",
+    "chart.js": "^4.3.1",
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
     "notyf": "^3.10.0",
